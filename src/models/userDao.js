@@ -22,7 +22,7 @@ const setNewPasswordDao = async (id, password) => {
 const loginEmailCheckDao = async (email) => {
   const emailCheck = await dataSource.query(
     `
-    SELECT id, email, password, nickname
+    SELECT id, email, password, name
     FROM users
     WHERE email = ?;
   `,
@@ -66,22 +66,11 @@ const dupliCheckPhoneDao = async (phonenumber) => {
   return checkVal.length;
 };
 
-const dupliCheckNicknameDao = async (nickname) => {
-  const checkVal = await dataSource.query(
-    `
-    SELECT name FROM users WHERE name = ?
-    `,
-    [nickname],
-  );
-  return checkVal.length;
-};
-
 module.exports = {
   getVerificationCodeDao,
   setNewPasswordDao,
   loginEmailCheckDao,
   createUserDao,
   dupliCheckEmailDao,
-  dupliCheckNicknameDao,
   dupliCheckPhoneDao
 };

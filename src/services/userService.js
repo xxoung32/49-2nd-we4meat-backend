@@ -4,27 +4,22 @@ const {
   setNewPasswordDao,
   createUserDao,
   dupliCheckEmailDao,
-  dupliCheckNicknameDao,
-  loginEmailCheckDao,
   dupliCheckPhoneDao,
+  loginEmailCheckDao,
 } = userDao;
 
 const createUserService = async (
-  nickname,
+  name,
   email,
   password,
-  profileImage,
   phoneNumber,
-  birthday,
 ) => {
   try {
     createUserDao(
       name,
       email,
       password,
-      profileImage,
       phoneNumber,
-      birthday,
     );
   } catch (err) {
     const error = new Error('INVALID_DATA_INPUT');
@@ -42,9 +37,9 @@ const dupliCheckEmailService = async (email, next) => {
   }
 };
 
-const dupliCheckNicknameService = async (nickname, next) => {
+const dupliCheckPhoneService = async (phoneNumber, next) => {
   try {
-    dupliCheckNicknameDao(nickname);
+    dupliCheckPhoneDao(phoneNumber);
   } catch (err) {
     console.error(err);
     next(err);
@@ -65,11 +60,10 @@ const setNewPasswordService = (id, password) => {
   return 'password updated';
 };
 
-module.exports = {
+module.exports = {  
   createUserService,
   dupliCheckEmailService,
-  dupliCheckNicknameService,
-  dupliCheckPhoneDao,
+  dupliCheckPhoneService,
   getVerificationCodeService,
   setNewPasswordService,
   loginService,

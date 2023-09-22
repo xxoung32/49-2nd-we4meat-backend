@@ -4,7 +4,6 @@ const {
   loginEmailCheckDao,
   createUserDao,
   dupliCheckEmailDao,
-  dupliCheckNicknameDao,
   dupliCheckPhoneDao,
 } = require('./userDao');
 
@@ -15,7 +14,6 @@ module.exports = {
     loginEmailCheckDao,
     createUserDao,
     dupliCheckEmailDao,
-    dupliCheckNicknameDao,
     dupliCheckPhoneDao,
   },
 };
