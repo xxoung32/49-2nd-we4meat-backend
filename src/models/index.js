@@ -7,6 +7,10 @@ const {
   dupliCheckPhoneDao,
 } = require('./userDao');
 
+const { 
+  getAllProductsDao,
+} = require('./productDao');
+
 module.exports = {
   userDao: {
     getVerificationCodeDao,
@@ -15,5 +19,8 @@ module.exports = {
     createUserDao,
     dupliCheckEmailDao,
     dupliCheckPhoneDao,
+  },
+  productDao: {
+    getAllProductsDao
   },
 };
