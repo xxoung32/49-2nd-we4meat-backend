@@ -1,6 +1,20 @@
+const {
+  createUserService,
+  dupliCheckEmailService,
+  getVerificationCodeService,
+  setNewPasswordService,
+  loginService,
+} = require('./userService');
 const { getOrderService } = require('./orderService');
 
-module.export = {
+module.exports = {
+  userService: {
+    createUserService,
+    dupliCheckEmailService,
+    getVerificationCodeService,
+    setNewPasswordService,
+    loginService,
+  },
   orderService: {
     getOrderService,
   },
