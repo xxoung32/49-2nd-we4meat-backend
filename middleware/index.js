@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { throwError } = require('../utils');
+const { throwError } = require('../util/throwError');
 
 exports.verifyToken = (req, res, next) => {
   const token = req.header('Authorization');
@@ -11,6 +11,7 @@ exports.verifyToken = (req, res, next) => {
   }
 
   try {
+    // const decoded = jwt.verify("해시값" , '비밀키')
     const decoded = jwt.verify(
       token.replace('Bearer ', ''),
       process.env.JWT_SECRET,
