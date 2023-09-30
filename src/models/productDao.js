@@ -2,8 +2,9 @@ const { dataSource } = require('./dataSource');
 
 const listProductsDao = async (categoryName) => {
   const products = await dataSource.query(
-    `SELECT c.name AS category,
+    `SELECT p.id AS productId,
             p.product_name AS productName,
+            c.name AS productCategory,
             p.product_img AS productImg,
             p.price AS price,
             p.weight AS weight,
