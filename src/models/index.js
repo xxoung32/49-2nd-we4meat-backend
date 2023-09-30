@@ -8,7 +8,7 @@ const {
 } = require('./userDao');
 
 const { 
-  getAllProductsDao,
+  listProductsDao,
 } = require('./productDao');
 
 module.exports = {
@@ -21,6 +21,6 @@ module.exports = {
     dupliCheckPhoneDao,
   },
   productDao: {
-    getAllProductsDao
+    listProductsDao
   },
 };
