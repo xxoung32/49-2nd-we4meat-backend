@@ -6,6 +6,8 @@ const {
   loginService,
 } = require('./userService');
 
+const { listProductsService } = require('./productService');
+
 module.exports = {
   userService: {
     createUserService,
@@ -13,5 +15,8 @@ module.exports = {
     getVerificationCodeService,
     setNewPasswordService,
     loginService,
+  },
+  productService: {
+    listProductsService,
   },
 };

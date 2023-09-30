@@ -15,8 +15,7 @@ const {
 
 const signUpController = async (req, res) => {
   try {
-    const { name, email, password, phoneNumber, } =
-      req.body;
+    const { name, email, password, phoneNumber } = req.body;
 
     //필수 값 확인 - falsy 사용
     if (!name || !email || !password || !phoneNumber)
@@ -24,11 +23,9 @@ const signUpController = async (req, res) => {
 
     // 이메일 형식 확인하는 정규식
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailPattern.test(email))
-      throwError(400, 'CHECK_EMAIL_FORMAT');
+    if (!emailPattern.test(email)) throwError(400, 'CHECK_EMAIL_FORMAT');
 
-    if (password.length < 10)
-      throwError(400, 'PASSWORD_10_DIGIT_MININUM');
+    if (password.length < 10) throwError(400, 'PASSWORD_10_DIGIT_MININUM');
 
     // 비밀번호 확인에 필요한 정규식
     const pwValidation = /.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\|-].*/;
@@ -107,7 +104,7 @@ const getVerificationCodeController = async (req, res, next) => {
   try {
     const { email, redirect_uri } = req.body;
     const id = await getVerificationCodeService(email);
-    if (!id) throwError(401, "NO_SUCH_USER");
+    if (!id) throwError(401, 'NO_SUCH_USER');
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
