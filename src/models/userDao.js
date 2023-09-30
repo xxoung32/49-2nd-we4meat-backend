@@ -3,7 +3,7 @@ const { dataSource } = require('./dataSource');
 const getVerificationCodeDao = async (email) => {
   const [id] = await dataSource.query(
     `
-        SELECT id FROM users WHERE email = ?
+        SELECT id FROM customers WHERE email = ?
         `,
     [email],
   );
@@ -13,7 +13,7 @@ const getVerificationCodeDao = async (email) => {
 const setNewPasswordDao = async (id, password) => {
   await dataSource.query(
     `
-  UPDATE users SET password = ? WHERE id = ? 
+  UPDATE customers SET password = ? WHERE id = ? 
   `,
     [password, id],
   );
@@ -23,7 +23,7 @@ const loginEmailCheckDao = async (email) => {
   const emailCheck = await dataSource.query(
     `
     SELECT id, email, password, name
-    FROM users
+    FROM customers
     WHERE email = ?;
   `,
     [email],
@@ -31,12 +31,7 @@ const loginEmailCheckDao = async (email) => {
   return emailCheck;
 };
 
-const createUserDao = async (
-  name,
-  email,
-  password,
-  phoneNumber,
-) => {
+const createUserDao = async (name, email, password, phoneNumber) => {
   const userCredential = dataSource.query(
     `INSERT INTO customers(
       name, email, password, phonenumber) VALUES (?, ?, ?, ?);
@@ -49,7 +44,7 @@ const createUserDao = async (
 const dupliCheckEmailDao = async (email) => {
   const checkVal = await dataSource.query(
     `
-    SELECT email FROM users WHERE email = ?
+    SELECT email FROM customers WHERE email = ?
     `,
     [email],
   );
@@ -59,7 +54,7 @@ const dupliCheckEmailDao = async (email) => {
 const dupliCheckPhoneDao = async (phonenumber) => {
   const checkVal = await dataSource.query(
     `
-    SELECT phonenumber FROM users WHERE phonenumber = ?
+    SELECT phonenumber FROM customers WHERE phonenumber = ?
     `,
     [phonenumber],
   );
@@ -72,5 +67,5 @@ module.exports = {
   loginEmailCheckDao,
   createUserDao,
   dupliCheckEmailDao,
-  dupliCheckPhoneDao
+  dupliCheckPhoneDao,
 };

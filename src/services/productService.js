@@ -1,8 +1,8 @@
 const { productDao } = require('../models');
 const { listProductsDao } = productDao;
 
-const listProductsService = async (categoryId) => {
-  return listProductsDao(categoryId);
+const listProductsService = async (categoryName) => {
+  return listProductsDao(categoryName);
 };
 
 module.exports = {
