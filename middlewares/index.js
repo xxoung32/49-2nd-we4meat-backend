@@ -1,10 +1,10 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { throwError } = require('../util/throwError');
+const { throwError } = require('../utils');
 
 exports.verifyToken = (req, res, next) => {
-  const token = req.header('Authorization');
-
+  const token = req.headers.authorization;
+  console.log(token);
   // 토큰 유무 확인
   if (!token) {
     throwError(401, 'access token denied');

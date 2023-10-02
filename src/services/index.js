@@ -5,7 +5,13 @@ const {
   setNewPasswordService,
   loginService,
 } = require('./userService');
-const { getOrderService } = require('./orderService');
+
+const {
+  getOrdersService,
+  addToOrdersService,
+  cancelOrdersService,
+  createOrderAddressService,
+} = require('./orderService');
 
 module.exports = {
   userService: {
@@ -15,7 +21,11 @@ module.exports = {
     setNewPasswordService,
     loginService,
   },
+
   orderService: {
-    getOrderService,
+    getOrdersService,
+    addToOrdersService,
+    cancelOrdersService,
+    createOrderAddressService,
   },
 };

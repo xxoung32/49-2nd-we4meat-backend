@@ -5,7 +5,12 @@ const {
   loginController,
   dupliCheckController,
 } = require('./userController');
-const { createOrderController } = require('./orderController');
+
+const {
+  getOrdersController,
+  addToOrdersController,
+  cancelOrdersController,
+} = require('./orderController');
 
 module.exports = {
   userController: {
@@ -16,6 +21,8 @@ module.exports = {
     dupliCheckController,
   },
   orderController: {
-    createOrderController,
+    getOrdersController,
+    addToOrdersController,
+    cancelOrdersController,
   },
 };
