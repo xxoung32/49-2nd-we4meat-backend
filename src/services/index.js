@@ -13,6 +13,18 @@ const {
   createOrderAddressService,
 } = require('./orderService');
 
+const {
+  listProductsService,
+  productDetailService,
+} = require('./productService');
+
+const {
+  getReviewService,
+  createReviewService,
+  updateReviewService,
+  deleteReviewService,
+} = require('./reviewService');
+
 module.exports = {
   userService: {
     createUserService,
@@ -27,5 +39,15 @@ module.exports = {
     addToOrdersService,
     cancelOrdersService,
     createOrderAddressService,
+  },
+  productService: {
+    listProductsService,
+    productDetailService,
+  },
+  reviewService: {
+    getReviewService,
+    createReviewService,
+    updateReviewService,
+    deleteReviewService,
   },
 };
