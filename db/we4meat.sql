@@ -206,6 +206,7 @@ CREATE TABLE `orders` (
   `total_amount` int NOT NULL,
   `requested_date` date DEFAULT NULL,
   `shipping_message` varchar(40) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
