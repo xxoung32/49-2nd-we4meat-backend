@@ -77,15 +77,12 @@ const customerCartDao = async (userId) => {
   );
 };
 
-const MoveCartToOrderDao = async (userId, totalPrice) => {
+const MoveCartToOrderDao = async (userId, totalPrice, customers_Carts) => {
   const queryRunner = dataSource.createQueryRunner();
   await queryRunner.connect();
   await queryRunner.startTransaction();
 
   try {
-    const userCarts = await dataSource.query(`
-    SELECT * FROM carts
-  `);
     await queryRunner.query(
       `
           UPDATE customers_wallet 
@@ -95,7 +92,11 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
       [totalPrice, userId],
     );
 
-    for (var baseNumber = 0; baseNumber < userCarts.length; baseNumber++) {
+    for (
+      var baseNumber = 0;
+      baseNumber < customers_Carts.length;
+      baseNumber++
+    ) {
       await queryRunner.query(
         `
               INSERT INTO orders(
@@ -106,8 +107,8 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
               ) VALUES (?,?,?,?);`,
         [
           userId,
-          userCarts[baseNumber].product_option_id,
-          userCarts[baseNumber].quantity,
+          customers_Carts[baseNumber].product_option_id,
+          customers_Carts[baseNumber].quantity,
           orderStatusEnum.ADDED,
         ],
       );

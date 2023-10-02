@@ -1,7 +1,7 @@
 const { throwError } = require('../../utils');
 const { orderDao, enums } = require('../models');
 
-//주문하기
+//주문상세 불러오기
 const getOrdersService = async (userId) => {
   const customerOrders = await orderDao.getOrdersDao(userId);
   if (!customerOrders[0]) {
@@ -13,7 +13,7 @@ const getOrdersService = async (userId) => {
   return customerOrders;
 };
 
-//주문정보 불러오기
+//주문하기
 const addToOrdersService = async (userId, totalPrice) => {
   const customers_Credit = await orderDao.checkCreditDao(userId);
   const customers_Carts = await orderDao.customerCartDao(userId);
@@ -30,7 +30,7 @@ const addToOrdersService = async (userId, totalPrice) => {
 
     throwError;
   }
-  return orderDao.MoveCartToOrderDao(userId, totalPrice, userCarts);
+  return orderDao.MoveCartToOrderDao(userId, totalPrice, customers_Carts);
 };
 
 const cancelOrdersService = async (userId, orderId, totalPrice) => {
