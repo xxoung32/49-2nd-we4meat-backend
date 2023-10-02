@@ -1,3 +1,5 @@
+// const { orderStatusEnum } = require('./enums');
+
 const {
   getVerificationCodeDao,
   setNewPasswordDao,
@@ -7,9 +9,15 @@ const {
   dupliCheckPhoneDao,
 } = require('./userDao');
 const {
-  getOrderDao,
+  getOrdersDao,
   postOrderAddressDao,
   customerAddressDao,
+  getOrderListDao,
+  customerCartDao,
+  checkOrderStatusDao,
+  checkCreditDao,
+  MoveCartToOrderDao,
+  cancelOrdersDao,
 } = require('./orderDao');
 
 module.exports = {
@@ -22,8 +30,17 @@ module.exports = {
     dupliCheckPhoneDao,
   },
   orderDao: {
-    getOrderDao,
+    getOrdersDao,
     postOrderAddressDao,
     customerAddressDao,
+    getOrderListDao,
+    customerCartDao,
+    checkOrderStatusDao,
+    checkCreditDao,
+    MoveCartToOrderDao,
+    cancelOrdersDao,
   },
+  // eums: {
+  //   orderStatusEnum,
+  // }
 };
