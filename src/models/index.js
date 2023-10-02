@@ -1,2 +1,12 @@
-const cartsDao = require('./cartsDao')
-module.exports = { cartsDao };
+const {
+    insertCartsDao,
+    getCartsByCustomerIdDao,
+    deleteCartByIdDao } = require('./cartsDao');
+
+module.exports = {
+    cartsDao: {
+        insertCartsDao,
+        getCartsByCustomerIdDao,
+        deleteCartByIdDao
+    },
+};

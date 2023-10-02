@@ -2,17 +2,22 @@ const express = require('express');
 const { verifyToken } = require('../../middleware');
 const { cartsController } = require('../controllers');
 const {
-createCartsController,
-// getCartsController,
-// updateCartsController,
-
+insertCartsController,
+getCartsByCustomerIdController,
+deleteCartByIdController
 } = cartsController;
 const router = express.Router();
 
+// ====> 토큰 postman에 적용하는 법 몰라서 통신을 위해 verrfyToken 함수 뺐음
+router.post('/create', insertCartsController);  
+router.get('/:id', getCartsByCustomerIdController);
+router.patch('/delete', deleteCartByIdController);
 
-router.post('/create', verifyToken, createCartsController);
-// router.post('/create', createCartsController);  ====> 토큰 postman에 적용하는 법 몰라서 통신을 위해 사용함
-// router.get('/', verifyToken, getCartsController);
-// router.patch('/', verifyToken, updateCartsController);
+// ====> 토큰 발행 후 사용할 routers
+// router.post('/create', verifyToken, insertCartsController);
+// router.get('/:id', verifyToken, getCartsByCustomerIdController);
+// router.patch('/delete',verifyToken, deleteCartByIdController);
+
+
 
 module.exports = router;
