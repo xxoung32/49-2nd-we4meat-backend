@@ -7,9 +7,14 @@ const {
   dupliCheckPhoneDao,
 } = require('./userDao');
 
-const { 
-  listProductsDao,
-} = require('./productDao');
+const { listProductsDao, productDetailDao } = require('./productDao');
+
+const {
+  getReviewDao,
+  createReviewDao,
+  updateReviewDao,
+  deleteReviewDao,
+} = require('./reviewDao');
 
 module.exports = {
   userDao: {
@@ -21,6 +26,13 @@ module.exports = {
     dupliCheckPhoneDao,
   },
   productDao: {
-    listProductsDao
+    listProductsDao,
+    productDetailDao,
+  },
+  reviewDao: {
+    getReviewDao,
+    createReviewDao,
+    updateReviewDao,
+    deleteReviewDao,
   },
 };

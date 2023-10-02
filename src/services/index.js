@@ -6,7 +6,17 @@ const {
   loginService,
 } = require('./userService');
 
-const { listProductsService } = require('./productService');
+const {
+  listProductsService,
+  productDetailService,
+} = require('./productService');
+
+const {
+  getReviewService,
+  createReviewService,
+  updateReviewService,
+  deleteReviewService,
+} = require('./reviewService');
 
 module.exports = {
   userService: {
@@ -18,5 +28,12 @@ module.exports = {
   },
   productService: {
     listProductsService,
+    productDetailService,
+  },
+  reviewService: {
+    getReviewService,
+    createReviewService,
+    updateReviewService,
+    deleteReviewService,
   },
 };
