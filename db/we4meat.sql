@@ -111,7 +111,6 @@ DROP TABLE IF EXISTS `customer_wallets`;
 CREATE TABLE `customer_wallets` (
   `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int NOT NULL,
-  `uuid` varchar(40) NOT NULL,
   `credit` int DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
