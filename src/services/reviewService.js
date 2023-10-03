@@ -2,8 +2,7 @@ const { reviewDao } = require('../models');
 const { getReviewDao, createReviewDao, updateReviewDao, deleteReviewDao } = reviewDao;
 
 const getReviewService = async (productId) => {
-  getReviewDao(productId);
-  return 'REVIEW_CALLED';
+  return getReviewDao(productId);
 };
 const createReviewService = async (userId, productId, title, body, imgUrl) => {
   createReviewDao(userId, productId, title, body, imgUrl);
