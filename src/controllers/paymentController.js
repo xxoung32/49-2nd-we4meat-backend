@@ -9,7 +9,7 @@ const {walletRechargeService, walletDeductionService, getOrderlistService,getWal
 const checkAmountController = async(req,res,next) => {
   try{
     const { id } = req.user;
-    const orderAmount = await getOrderlistService(totalAmount, id)
+    const orderAmount = await getOrderlistService(id)
     const walletCredit = await getWalletBalanceService(id);
     if(!walletCredit){
       throwError(400, 'Wallet not found')
@@ -17,7 +17,7 @@ const checkAmountController = async(req,res,next) => {
     {throwError(400, 'Insufficient balance');}
     return res.status(200).json({"Reserve balance": walletCredit, "Order Amount" : orderAmount})
   } catch (err) {
-    console.error
+    console.log(err);
     next(err);
   }
 };
@@ -28,9 +28,9 @@ const walletDeductionController = async(req, res, next) => {
     const itemPayment = await walletDeductionService(orderAmount, id)
     return res.status(200).json({"Complete payment"})
     // 오더상태 변경 
-  } catch (error) {
-    console.error
-    next(err)
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 }
 
@@ -44,9 +44,9 @@ const walletRechargeController = async(req, res, next) => {
     }if (!walletNewCredit)  
     {throwError(400, 'Charging errors');}
     return res.status(200).json({"Total amount" : walletNewCredit})
-  }catch (error) {
-    console.error
-    next(err)
+  }catch (err) {
+    console.log(err);
+    next(err);
   }
 }
 

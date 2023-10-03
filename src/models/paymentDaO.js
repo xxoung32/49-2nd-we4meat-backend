@@ -9,15 +9,11 @@ const getWalletBalanceDao = async (customerId) => {
   return checkWalletBalance;
 };
 
-const getOrderlistDao = async (totalAmount, customerId) => {
+const getOrderlistDao = async (customerId) => {
   const checkTotalAmount = await dataSource.query(
     `
-    SELECT * FROM orders WHERE customer_id = ?;
-    SELECT * FROM customer_wallets
-    INNER JOIN customers ON customer_wallets.customer_id = customers.id
-    WHERE customer_id = ?;
-    `,
-    [totalAmount, customerId],
+    SELECT total_amount FROM orders WHERE customer_id = ?;`,
+    [customerId],
   );
   return checkTotalAmount;
 };
@@ -32,12 +28,12 @@ const walletUpdateDao = async (newCredit, customerId) => {
 };
 
 // 오더상태 변경 Dao 아직 구현 못함
-const changeOrderStatus = async (orederStatus, customerId) => {
-  const order_status = await dataSource.query(
-    `UPDATE orders status = ? WHERE customer_id = ?`,
-    [orederStatus, customerId],
-  );
-};
+// const changeOrderStatus = async (orederStatus, customerId) => {
+//   const order_status = await dataSource.query(
+//     `UPDATE orders status = ? WHERE customer_id = ?`,
+//     [orederStatus, customerId],
+//   );
+// };
 
 module.exports = {
   getWalletBalanceDao,

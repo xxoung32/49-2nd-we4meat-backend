@@ -1,15 +1,14 @@
 const express = require('express');
-const { verifyToken } = require('../middlewares');
 const { paymentController } = require('../controllers');
 const {
   checkAmountController,
   walletRechargeController,
   walletDeductionController,
-  getOrderlistController,
 } = paymentController;
+const { verifyToken } = require('../../middlewares');
 const router = express.Router();
 
-router.post('/', verifyToken, checkAmountController, getOrderlistController);
+router.post('/', verifyToken, checkAmountController);
 router.patch('/complete', verifyToken, walletDeductionController);
 router.patch('/topupcredit', verifytoken, walletRechargeController);
 

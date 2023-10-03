@@ -4,8 +4,8 @@ const { paymentController } = require('../controllers/paymentController');
 const { chargeAmount } = paymentController;
 
 // 주문금액 불러오기
-const getOrderlistService = async (totalAmount, customerId) => {
-  return getOrderlistDao(totalAmount, customerId);
+const getOrderlistService = async (customerId) => {
+  return getOrderlistDao(customerId);
 };
 
 //  적립금 불러오기

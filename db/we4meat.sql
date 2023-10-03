@@ -192,6 +192,32 @@ LOCK TABLES `order_items` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `order_status`
+--
+
+DROP TABLE IF EXISTS `order_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_status` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `status_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `order_status_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_status`
+--
+
+LOCK TABLES `order_status` WRITE;
+/*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `orders`
 --
 
@@ -205,7 +231,6 @@ CREATE TABLE `orders` (
   `total_amount` int NOT NULL,
   `requested_date` date DEFAULT NULL,
   `shipping_message` varchar(40) DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -342,7 +367,7 @@ CREATE TABLE `reviews` (
   KEY `reviews_ibfk_2` (`product_id`),
   CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -351,7 +376,31 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+INSERT INTO `reviews` VALUES (1,1,1,'삽겹살은 맛있다','진짜 진짜 맛있어요, 둘이 먹다 둘이 죽어도 모를 맛!',NULL,'2023-10-03 10:46:56',NULL),(2,1,2,'한우 투뿔인가?','당일도축 고기를 즐길 수 있어서 너무 좋아요.',NULL,'2023-10-03 11:21:43',NULL),(3,1,2,'한우 1+++?','지금까지 이런 한우는 없었다. 이것은 투쁠인가 쓰리플인가?',NULL,'2023-10-03 11:59:53',NULL),(4,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-03 12:02:47',NULL);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `status`
+--
+
+DROP TABLE IF EXISTS `status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `status` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `status`
+--
+
+LOCK TABLES `status` WRITE;
+/*!40000 ALTER TABLE `status` DISABLE KEYS */;
+/*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -363,4 +412,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-02 15:50:18
+-- Dump completed on 2023-10-03 21:03:55
