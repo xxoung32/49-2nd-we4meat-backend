@@ -15,12 +15,13 @@ const {
   updateReviewController,
   deleteReviewController,
 } = require('./reviewController');
-
 const {
   getOrdersController,
   addToOrdersController,
   cancelOrdersController,
 } = require('./orderController');
+
+const { getAddressController } = require('./addressController');
 
 module.exports = {
   userController: {
@@ -44,5 +45,8 @@ module.exports = {
     createReviewController,
     updateReviewController,
     deleteReviewController,
+  },
+  addressController: {
+    getAddressController,
   },
 };
