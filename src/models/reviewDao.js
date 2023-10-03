@@ -12,7 +12,7 @@ const getReviewDao = async (userId, productId) => {
 const createReviewDao = async (userId, { review, reviewId }) => {
   await dataSource.query(
     `
-    INSERT INTO reviews (review, customer_id, thread_id) VALUES (?, ?, ?)
+    INSERT INTO reviews (body, customer_id, thread_id) VALUES (?, ?, ?)
     `,
     [review, userId, reviewId],
   );
@@ -21,7 +21,7 @@ const createReviewDao = async (userId, { review, reviewId }) => {
 const updateReviewDao = async (userId, { review, reviewId }) => {
   await dataSource.query(
     `
-    UPDATE reviews SET review = ? WHERE customer_id = ? AND id = ?
+    UPDATE reviews SET body = ? WHERE customer_id = ? AND id = ?
     `,
     [review, userId, reviewId],
   );
