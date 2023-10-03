@@ -1,17 +1,26 @@
 const { throwError } = require('../../utils');
 const { reviewService } = require('../services');
-const { createReviewService, updateReviewService, deleteReviewService } = reviewService;
+const { getReviewService, createReviewService, updateReviewService, deleteReviewService } = reviewService;
 
 const getReviewController = async (req, res, next) => {
-    return
-}
+    try {
+        const { productId } = req.params;
+        if (!productId) throwError(400, 'NO_PRODUCT_ID');
+        return res.status(200).json(await getReviewService(productId))
+    } catch (err) {
+        console.error(err);
+        next(err);
+    };
+};
 
 const createReviewController = async (req, res, next) => {
     try {
-        const { id } = req.user;
-        const { body, productId } = req.body;
-        if (!body) throwError(400, 'NO_COMMENT');
-        return res.status(201).json(await createReviewService(id, { body, productId }))
+        const { userId } = req.user;
+        const { productId, title, body, imgUrl } = req.body;
+        if (!userId || !productId) throwError(400, "KEY_ERROR")
+        if (!body) throwError(400, 'NO_CONTENT');
+        if (!title) throwError(400, "NO_TITLE");
+        return res.status(201).json(await createReviewService(userId, productId, title, body, imgUrl))
     } catch (err) {
         console.error(err);
         next(err);
@@ -20,10 +29,12 @@ const createReviewController = async (req, res, next) => {
 
 const updateReviewController = async (req, res, next) => {
     try {
-        const { id } = req.user;
-        const { body, reviewId } = req.body;
-        if (!body || !reviewId) throwError(400, 'KEY_ERROR');
-        return res.status(201).json({message : await updateReviewService(id, req.body)})
+        const { userId } = req.user;
+        const { productId, title, body, imgUrl } = req.body;
+        if (!userId || !productId) throwError(400, "KEY_ERROR")
+        if (!body) throwError(400, 'NO_CONTENT');
+        if (!title) throwError(400, "NO_TITLE");
+        return res.status(201).json({message : await updateReviewService(userId, productId, title, body, imgUrl)})
     } catch (err) {
         console.error(err);
         next(err);

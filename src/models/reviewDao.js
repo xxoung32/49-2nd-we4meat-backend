@@ -1,6 +1,6 @@
 const { dataSource } = require('./dataSource');
 
-const getReviewDao = async (userId, productId) => {
+const getReviewDao = async (productId) => {
   await dataSource.query(
     `
     SELECT * FROM reviews WHERE customer_id = ? & product_id = ?
@@ -9,21 +9,21 @@ const getReviewDao = async (userId, productId) => {
   );
 };
 
-const createReviewDao = async (userId, { review, reviewId }) => {
+const createReviewDao = async (userId, productId, title, body, imgUrl) => {
   await dataSource.query(
     `
-    INSERT INTO reviews (body, customer_id, thread_id) VALUES (?, ?, ?)
+    INSERT INTO reviews (customer_id, product_id, title, body, imgUrl) VALUES (?, ?, ?, ?, ?)
     `,
-    [review, userId, reviewId],
+    [userId, productId, title, body, imgUrl],
   );
 };
 
-const updateReviewDao = async (userId, { review, reviewId }) => {
+const updateReviewDao = async (userId, productId, title, body, imgUrl) => {
   await dataSource.query(
     `
-    UPDATE reviews SET body = ? WHERE customer_id = ? AND id = ?
+    UPDATE reviews SET title =?, body = ?, imgUrl =?  WHERE customer_id = ? AND id = ?
     `,
-    [review, userId, reviewId],
+    [title, body, imgUrl, userId, productId],
   );
 };
 

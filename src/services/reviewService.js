@@ -1,22 +1,21 @@
-const { reviewDao } = require('../../src/models');
-const { createReviewDao, updateReviewDao, deleteReviewDao } = reviewDao;
+const { reviewDao } = require('../models');
+const { getReviewDao, createReviewDao, updateReviewDao, deleteReviewDao } = reviewDao;
 
 const getReviewService = async (productId) => {
   getReviewDao(productId);
-  return 'Review received';
+  return 'REVIEW_CALLED';
 };
-
-const createReviewService = async (id, body) => {
-  createReviewDao(id, body);
-  return 'Review created';
+const createReviewService = async (userId, productId, title, body, imgUrl) => {
+  createReviewDao(userId, productId, title, body, imgUrl);
+  return 'REVIEW_CREATED';
 };
-const updateReviewService = async (id, body) => {
-  updateReviewDao(id, body);
-  return 'Review updated';
+const updateReviewService = async (userId, productId, title, body, imgUrl) => {
+  updateReviewDao(userId, productId, title, body, imgUrl);
+  return 'REVIEW_UPDATED';
 };
-const deleteReviewService = async (id, productId) => {
-  deleteReviewDao(id, productId);
-  return 'Review deleted';
+const deleteReviewService = async (userId, reviewId) => {
+  deleteReviewDao(userId, reviewId);
+  return 'REVIEW_DELETED';
 };
 
 module.exports = {
