@@ -1,5 +1,7 @@
 const { paymentDAO } = require('../models/paymentDAO');
 const { getWalletBalanceDao, walletUpdateDao, getOrderlistDao } = paymentDAO;
+const { paymentController } = require('../controllers/paymentController');
+const { chargeAmount } = paymentController;
 
 // 주문금액 불러오기
 const getOrderlistService = async (totalAmount, customerId) => {
@@ -7,16 +9,16 @@ const getOrderlistService = async (totalAmount, customerId) => {
 };
 
 //  적립금 불러오기
-const getWalletBalanceService = async (credit, customerId) => {
-  return getWalletBalanceDao(credit, customerId);
+const getWalletBalanceService = async (customerId) => {
+  return getWalletBalanceDao(customerId);
 };
 
 // 충전
 
-const walletRechargeService = async (credit, customerId) => {
+const walletRechargeService = async (chargeAmount, customerId) => {
   const currentCredit = await getWalletBalanceDao(credit, customerId);
-  const chargeAmount = await walletRechargeController(chargeAmount, customerId);
-  const newCredit = currentCredit + orderAmount;
+  const chargeCredit = chargeAmount;
+  const newCredit = currentCredit + chargeCredit;
   return walletUpdateDao(newCredit, customerId);
 };
 
