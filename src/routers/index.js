@@ -4,11 +4,13 @@ const router = express.Router();
 const userRouter = require('./userRouter');
 const productRouter = require('./productRouter');
 const orderRouter = require('./orderRouter');
+const addressRouter = require('./addressRouter');
 // const reviewRouter = require('./reviewRouter');
 
 router.use('/users', userRouter);
 router.use('/order', orderRouter);
 router.use('/list', productRouter);
 // router.use('/review', reviewRouter);
+router.use('/address', addressRouter);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const { dataSource } = require('./dataSource');
-const { orderStatusEnum } = require('./eums');
+const { orderStatusEnum } = require('./enums');
 //주문 상세 정보 불러오기
 const getOrdersDao = async (userId, orderId) => {
   return await dataSource.query(
@@ -144,9 +144,12 @@ const checkOrderStatusDao = async (orderId) => {
     [orderId],
   );
   console.log(orderStatus);
-  return orderStatus[0].osi;
-};
 
+  if (orderStatus.length > 0) {
+    return orderStatus[1].osi;
+  }
+};
+//진액확인
 const checkCreditDao = async (userId, userWalletId) => {
   return await dataSource.query(
     `
