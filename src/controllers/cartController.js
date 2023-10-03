@@ -44,6 +44,7 @@ const updateCartController = async (req, res, next) => {
   try {
     const customerId = req.user.id;
     const products = req.body.products;
+
     if (!customerId || !products) throwError(400, 'KEY_ERROR');
     //Business logic
     return res.status(201).json({
@@ -53,7 +54,6 @@ const updateCartController = async (req, res, next) => {
   } catch (err) {
     console.error(err);
     next(err);
-    // return res.status(error.statusCode || 400).json({ message: error.message });
   }
 };
 
