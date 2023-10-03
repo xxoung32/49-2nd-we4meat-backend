@@ -15,7 +15,7 @@ const {
   updateReviewController,
   deleteReviewController,
 } = require('./reviewController');
-const cartsController = require('./cartsController')
+const cartsController = require('./cartsController');
 
 module.exports = {
   userController: {
@@ -35,5 +35,5 @@ module.exports = {
     updateReviewController,
     deleteReviewController,
   },
-  cartsController
+  cartsController,
 };
