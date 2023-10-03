@@ -2,36 +2,15 @@ const express = require('express');
 const { verifyToken } = require('../middlewares');
 const { paymentController } = require('../controllers');
 const {
-  getListController,
-  getListWalletController,
   checkAmountController,
-  changeAmountController,
-  purchaseCompleteController,
-  creatwalletController,
+  walletRechargeController,
+  walletDeductionController,
+  getOrderlistController,
 } = paymentController;
 const router = express.Router();
 
-router.get('/oreder/getlist=id', verifyToken, getListController);
-router.get(
-  '/oreder/getlist=id/wallet=id',
-  verifyToken,
-  getListWalletController,
-);
-router.get(
-  '/oreder/getlist=id/wallet=id/amount',
-  verifyToken,
-  checkAmountController,
-);
-router.patch(
-  '/oreder/getlist=id/wallet=id/amount',
-  verifyToken,
-  changeAmountController,
-);
-router.post(
-  '/purchasecomplete/payment=id',
-  verifyToken,
-  purchaseCompleteController,
-);
-router.post('/creatwallet', verifyToken, creatwalletController);
+router.post('/', verifyToken, checkAmountController, getOrderlistController);
+router.patch('/complete', verifyToken, walletDeductionController);
+router.patch('/topupcredit', verifytoken, walletRechargeController);
 
 module.exports = router;

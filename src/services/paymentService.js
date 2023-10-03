@@ -1,16 +1,37 @@
 const { paymentDAO } = require('../models/paymentDAO');
-const { creatWlletDAO } = paymentDAO;
+const { getWalletBalanceDao, walletUpdateDao, getOrderlistDao } = paymentDAO;
 
-// 아이디 생성시 월렛 생성
-const firstorderRegistration= async (user_id, credit) => {
-  // 크래딧 첫 등록시 지갑생성 
-  const newMoney = 
+// 주문금액 불러오기
+const getOrderlistService = async (totalAmount, customerId) => {
+  return getOrderlistDao(totalAmount, customerId);
+};
 
-  if (!pwValidation.test(password)) {
-    const err = new Error('PASSWORD_IS_NOT_VALID');
-    err.statusCode = 409;
-    throw err;
-  }
+//  적립금 불러오기
+const getWalletBalanceService = async (credit, customerId) => {
+  return getWalletBalanceDao(credit, customerId);
+};
 
-  return createUser;
+// 충전
+
+const walletRechargeService = async (credit, customerId) => {
+  const currentCredit = await getWalletBalanceDao(credit, customerId);
+  const chargeAmount = await walletRechargeController(chargeAmount, customerId);
+  const newCredit = currentCredit + orderAmount;
+  return walletUpdateDao(newCredit, customerId);
+};
+
+//  차감
+
+const walletDeductionService = async (credit, customerId) => {
+  const currentCredit = await getWalletBalanceDao(credit, customerId);
+  const orderAmount = await getOrderlistDao(totalAmount, customerId);
+  const newCredit = currentCredit - orderAmount;
+  return walletUpdateDao(newCredit, customerId);
+};
+
+module.exports = {
+  walletRechargeService,
+  walletDeductionService,
+  getOrderlistService,
+  getWalletBalanceService,
 };

@@ -1,6 +1,6 @@
 const { throwError } = require('../../utils');
 const { productService } = require('../services');
-const { listProductsService } = productService;
+const { listProductsService, productDetailService } = productService;
 
 const listProductController = async (req, res, next) => {
   try {
@@ -17,6 +17,22 @@ const listProductController = async (req, res, next) => {
   }
 };
 
+const productDetailController = async (req, res, next) => {
+  try {
+    if (req?.query.productId == null) throwError(400, 'NO_PRODUCT');
+    console.log(req.query.productId);
+    productId = req.query.productId;
+    return res.status(200).json({
+        message: 'QUERY_SUCCESSFUL',
+        data: await productDetailService(productId),
+      });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
 module.exports = {
   listProductController,
+  productDetailController,
 };
