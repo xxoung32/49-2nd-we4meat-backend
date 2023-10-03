@@ -39,14 +39,12 @@ const getCartController = async (req, res, next) => {
   }
 };
 
-// 장바구니 업데이트
+// 장바구니 업데이트 - 완
 const updateCartController = async (req, res, next) => {
   try {
     const customerId = req.user.id;
     const products = req.body.products;
-
     if (!customerId || !products) throwError(400, 'KEY_ERROR');
-    //Business logic
     return res.status(201).json({
       message: 'CART_UPDATED',
       data: await updateCartService(customerId, products),
