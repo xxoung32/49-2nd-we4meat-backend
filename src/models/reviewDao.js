@@ -1,34 +1,34 @@
 const { dataSource } = require('./dataSource');
 
-const getReviewDao = async (userId, productId) => {
-  await dataSource.query(
+const getReviewDao = async (productId) => {
+  return await dataSource.query(
     `
-    SELECT * FROM reviews WHERE customer_id = ? & product_id = ?
+    SELECT * FROM reviews WHERE product_id = ?
     `,
-    [userId, productId],
+    [productId],
   );
 };
 
-const createReviewDao = async (userId, { review, reviewId }) => {
-  await dataSource.query(
+const createReviewDao = async (userId, productId, title, body, imgUrl) => {
+  return await dataSource.query(
     `
-    INSERT INTO reviews (review, customer_id, thread_id) VALUES (?, ?, ?)
+    INSERT INTO reviews (customer_id, product_id, title, body, imgUrl) VALUES (?, ?, ?, ?, ?)
     `,
-    [review, userId, reviewId],
+    [userId, productId, title, body, imgUrl],
   );
 };
 
-const updateReviewDao = async (userId, { review, reviewId }) => {
-  await dataSource.query(
+const updateReviewDao = async (userId, reviewId, title, body, imgUrl) => {
+  return await dataSource.query(
     `
-    UPDATE reviews SET review = ? WHERE customer_id = ? AND id = ?
+    UPDATE reviews SET title =?, body = ?, imgUrl =?  WHERE customer_id = ? AND id = ?
     `,
-    [review, userId, reviewId],
+    [title, body, imgUrl, userId, reviewId],
   );
 };
 
 const deleteReviewDao = async (userId, reviewId) => {
-  await dataSource.query(
+  return await dataSource.query(
     `
     DELETE FROM reviews WHERE customer_id = ? AND id = ?
     `,

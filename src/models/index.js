@@ -28,6 +28,12 @@ const {
 } = require('./reviewDao');
 
 const {
+  updateItemDao,
+  getCartDao,
+  purgeCartDao,
+} = require('./cartDao');
+
+const {
   postOrderAddressDao,
   customerAddressDao,
   getAddressDao,
@@ -61,6 +67,11 @@ module.exports = {
     createReviewDao,
     updateReviewDao,
     deleteReviewDao,
+  },
+  cartDao: {
+    updateItemDao,
+    getCartDao,
+    purgeCartDao,
   },
   addressDao: {
     postOrderAddressDao,
