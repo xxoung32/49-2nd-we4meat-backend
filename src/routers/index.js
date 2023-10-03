@@ -3,10 +3,10 @@ const router = express.Router();
 
 const userRouter = require('./userRouter');
 const productRouter = require('./productRouter');
-// const reviewRouter = require('./reviewRouter');
+const reviewRouter = require('./reviewRouter');
 
 router.use('/users', userRouter);
 router.use('/list', productRouter);
-// router.use('/review', reviewRouter);
+router.use('/review', reviewRouter);
 
 module.exports = router;
