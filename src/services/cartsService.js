@@ -23,18 +23,20 @@ const insertCartsService = async (customerId, productId, quantity) => {
         const deleteExistingCart = existingCustomerId[0].id;
         console.log("deleteExistingCart: ", deleteExistingCart)
         await dataSource.query(`DELETE FROM carts WHERE id = ?`, [deleteExistingCart]);
+        console.log("delete exsiting cart: ", deleteExistingCart)
     }
 
-
-    //==> 3. 새롭게 만든 카트 저장 예) INSERT INTO carts VALUES(id, customerId, product, ...) VALUE( ?, ? , ? ,?,?);
+//     //==> 3. 새롭게 만든 카트 저장 예) INSERT INTO carts VALUES(id, customerId, product, ...) VALUE( ?, ? , ? ,?,?);
     const newCartList = productId
     // const { customerId, productId, quantity } = newCartList
     const newCartListLength = newCartList
     console.log("newCartListLength: ", newCartListLength)
     for (let i = 0; i < newCartListLength; i++) {
+        const productItem = newCartList[i]
+        const { productId, quantity } = productItem || {}
         // const { customerId, productId, quantity } = newCartList[i]
         // await cartsDao.insertCartsDao(customerId, productId, quantity)
-        await insertCartsDao(customerId, newCartList[i].productId, newCartList[i].quantity)
+        await insertCartsDao(customerId, productId, quantity)
     }
     return "INSERT COMPLITED."
 };

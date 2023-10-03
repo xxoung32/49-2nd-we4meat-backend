@@ -18,7 +18,7 @@ const insertCartsDao = async (customer_id, product_id, quantity) => {
     const insertCartsData = await dataSource.query(`
     INSERT INTO carts (customer_id, product_id, quantity)
     VALUES (?, ?, ?)`,
-        [customer_id, product_id, quantity] //배열로 전달하기
+        [customer_id, product_id, quantity ] //배열로 전달하기
     );
     console.log("insertCartsdata: ", insertCartsData); //데이터 확인
     return insertCartsData;
