@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/', verifyToken, orderController.getOrdersController);
 router.post('/pay', verifyToken, orderController.addToOrdersController);
-router.post('/delete', verifyToken, orderController.cancelOrdersController);
+router.post('/cancel', verifyToken, orderController.cancelOrdersController);
 
 module.exports = router;

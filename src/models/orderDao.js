@@ -83,6 +83,9 @@ const MoveCartToOrderDao = async (userId, totalPrice, customers_Carts) => {
   await queryRunner.startTransaction();
 
   try {
+    const customers_Carts = await dataSource.query(`
+    SELECT * FROM carts
+  `);
     await queryRunner.query(
       `
           UPDATE customers_wallet 
@@ -100,8 +103,8 @@ const MoveCartToOrderDao = async (userId, totalPrice, customers_Carts) => {
       await queryRunner.query(
         `
               INSERT INTO orders(
-                  customers_id,
-                  products_id,
+                  customer_id,
+                  product_id,
                   quantity,
                   order_status_id
               ) VALUES (?,?,?,?);`,
