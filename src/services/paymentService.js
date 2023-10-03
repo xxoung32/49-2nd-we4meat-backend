@@ -1,5 +1,5 @@
-const { paymentDAO } = require('../models/paymentDAO');
-const { getWalletBalanceDao, walletUpdateDao, getOrderlistDao } = paymentDAO;
+const { paymentDao } = require('../models/paymentDao');
+const { getWalletBalanceDao, walletUpdateDao, getOrderlistDao } = paymentDao;
 const { paymentController } = require('../controllers/paymentController');
 const { chargeAmount } = paymentController;
 
@@ -30,6 +30,8 @@ const walletDeductionService = async (credit, customerId) => {
   const newCredit = currentCredit - orderAmount;
   return walletUpdateDao(newCredit, customerId);
 };
+
+//오더상태 변경<=== 이거 못함
 
 module.exports = {
   walletRechargeService,

@@ -12,10 +12,10 @@ const checkAmountController = async(req,res,next) => {
     const orderAmount = await getOrderlistService(totalAmount, id)
     const walletCredit = await getWalletBalanceService(id);
     if(!walletCredit){
-      throwError(400, '지갑을 찾을 수 없습니다.')
+      throwError(400, 'Wallet not found')
     }if (walletCredit < orderAmount)
-    {throwError(400, '잔액이 부족합니다.');}
-    return res.status(200).json({"적립금 잔액": walletCredit, "주문금액" : orderAmount})
+    {throwError(400, 'Insufficient balance');}
+    return res.status(200).json({"Reserve balance": walletCredit, "Order Amount" : orderAmount})
   } catch (err) {
     console.error
     next(err);
@@ -26,7 +26,8 @@ const walletDeductionController = async(req, res, next) => {
   try {
     const{ id } = req.user
     const itemPayment = await walletDeductionService(orderAmount, id)
-    return res.status(200).json({"차감완료하였습니다."})
+    return res.status(200).json({"Complete payment"})
+    // 오더상태 변경 
   } catch (error) {
     console.error
     next(err)
@@ -39,10 +40,10 @@ const walletRechargeController = async(req, res, next) => {
     const chargeAmount = req.body.credit
     const walletNewCredit = await walletRechargeService(chargeAmount, id)
     if(!chargeAmount){
-      throwError(400, '충전금액 찾을수 없습니다.')
+      throwError(400, 'NOT FOUND')
     }if (!walletNewCredit)  
-    {throwError(400, '충전오류.');}
-    return res.status(200).json({"적립 총 금액: walletNewCredit "})
+    {throwError(400, 'Charging errors');}
+    return res.status(200).json({"Total amount" : walletNewCredit})
   }catch (error) {
     console.error
     next(err)
