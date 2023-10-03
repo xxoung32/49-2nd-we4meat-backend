@@ -1,13 +1,19 @@
-const { cartsDao } = require('../models');
+const { cartDao } = require('../models');
 // const { dataSource } = require('../models/dataSource');
 const {
+  addItemDao,
+  getCartDao,
   insertCartsDao,
-  getCartsByCustomerIdDao,
-  deleteExistingCartsDao,
   deleteCartByIdDao,
-} = cartsDao;
+  deleteExistingCartsDao,
+} = cartDao;
 
-//카트 생성하기
+// 장바구니 아이템 (제품) 추가
+const addItemService = async (customerId, productId, quantity) => {
+  return await addItemDao(customerId, productId, quantity)
+}
+
+// 장바구니 생성하기
 const insertCartsService = async (customerId, products) => {
   await deleteExistingCartsDao(customerId); //기존 카트 삭제하기
   async function cartUpdate() {
@@ -25,10 +31,11 @@ const insertCartsService = async (customerId, products) => {
     }
   }
   await cartUpdate();
-  return 'INSERT COMPLITED.';
+  return 'INSERT_COMPLITED.';
 };
+
 // 장바구니 목록 조회
-const getCarstByCustomerIdService = async (customersId) => {
+const getCartService = async (customersId) => {
   console.log('2.getCarts by id service connected'); //레이어드 패턴 연결확인
   const getCartsByCustomerId = await getCartsByCustomerIdDao(customersId);
   //장바구니가 비어있을 때 ====> 빈 배열로 반환하고 메세지 표시 "장바구니가 비었습니다"
@@ -41,6 +48,7 @@ const getCarstByCustomerIdService = async (customersId) => {
   }
   return getCartsByCustomerId;
 };
+
 //장바구니 삭제
 const deleteCartByIdService = async (id, customerId) => {
   console.log('2.delete cart by id service connected'); //레이어드 패턴 연결확인
@@ -49,7 +57,8 @@ const deleteCartByIdService = async (id, customerId) => {
 };
 
 module.exports = {
+  addItemService,
   insertCartsService,
-  getCarstByCustomerIdService,
+  getCartService,
   deleteCartByIdService,
 };

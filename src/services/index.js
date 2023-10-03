@@ -19,10 +19,11 @@ const {
 } = require('./reviewService');
 
 const {
+  addItemService,
   insertCartsService,
-  getCarstByCustomerIdService,
+  getCartService,
   deleteCartByIdService,
-} = require('./cartsService');
+} = require('./cartService');
 
 module.exports = {
   userService: {
@@ -42,9 +43,10 @@ module.exports = {
     updateReviewService,
     deleteReviewService,
   },
-  cartsService: {
+  cartService: {
+    addItemService,
     insertCartsService,
-    getCarstByCustomerIdService,
+    getCartService,
     deleteCartByIdService,
   },
 };
