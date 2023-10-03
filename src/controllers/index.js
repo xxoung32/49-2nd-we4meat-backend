@@ -18,7 +18,7 @@ const {
 const {
   getCartController,
   addItemController,
-  insertCartsController,
+  updateCartController,
   deleteCartByIdController,
 } = require('./cartController');
 
@@ -43,7 +43,7 @@ module.exports = {
   cartController: {
     getCartController,
     addItemController,
-    insertCartsController,
+    updateCartController,
     deleteCartByIdController,
   },
 };

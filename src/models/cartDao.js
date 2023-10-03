@@ -34,7 +34,7 @@ const getCartDao = async (customerId) => {
 };
 
 // 장바구니 최종 업데이트(생성)
-const insertCartsDao = async (customerId, productId, quantity) => {
+const updateCartDao = async (customerId, productId, quantity) => {
   console.log('3.insert carts dao connected'); // 레이어드 패턴 연결확인
   const insertCartsData = await dataSource.query(
     `
@@ -88,7 +88,7 @@ const deleteCartByIdDao = async (productId, customerId) => {
 module.exports = {
   addItemDao,
   getCartDao,
-  insertCartsDao,
+  updateCartDao,
   deleteCartByIdDao,
   deleteExistingCartsDao,
 };

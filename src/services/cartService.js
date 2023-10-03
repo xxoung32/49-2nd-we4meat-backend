@@ -1,9 +1,8 @@
 const { cartDao } = require('../models');
-// const { dataSource } = require('../models/dataSource');
 const {
   addItemDao,
   getCartDao,
-  insertCartsDao,
+  updateCartDao,
   deleteCartByIdDao,
   deleteExistingCartsDao,
 } = cartDao;
@@ -19,7 +18,7 @@ const getCartService = async (customerId) => {
 };
 
 // 장바구니 생성하기
-const insertCartsService = async (customerId, products) => {
+const updateCartService = async (customerId, products) => {
   await deleteExistingCartsDao(customerId); //기존 카트 삭제하기
   async function cartUpdate() {
     const newCartList = products;
@@ -32,14 +31,12 @@ const insertCartsService = async (customerId, products) => {
       const { productId, quantity } = productItem || {};
       // productId와 quantity 변수를 여기서 사용
       console.log(productId, quantity);
-      await insertCartsDao(customerId, productId, quantity);
+      await updateCartDao(customerId, productId, quantity);
     }
   }
   await cartUpdate();
   return 'INSERT_COMPLITED.';
 };
-
-
 
 //장바구니 삭제
 const deleteCartByIdService = async (id, customerId) => {
@@ -50,7 +47,7 @@ const deleteCartByIdService = async (id, customerId) => {
 
 module.exports = {
   addItemService,
-  insertCartsService,
   getCartService,
+  updateCartService,
   deleteCartByIdService,
 };

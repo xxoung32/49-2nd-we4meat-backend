@@ -2,8 +2,8 @@ const { throwError } = require('../../utils/throwError.js');
 const { cartService } = require('../services');
 const {
   addItemService,
-  insertCartsService,
   getCartService,
+  updateCartService,
   deleteCartByIdService,
 } = cartService;
 
@@ -41,16 +41,14 @@ const getCartController = async (req, res, next) => {
 };
 
 // 장바구니 업데이트
-const insertCartsController = async (req, res) => {
+const updateCartController = async (req, res) => {
   try {
-    console.log('1.createCarts controller connect'); //레이어드 패턴 연결확인
     const customerId = req.user.id;
     const products = req.body.products;
-    // console.log(req.body.products.length, 'body legnth');
-    //필수값 확인하기
+
     if (!customerId || !products) throwError(400, '필수 필드를 확인해주세요');
     //Business logic
-    await insertCartsService(customerId, products);
+    await updateCartService(customerId, products);
     console.log('4.controller file after create carts service function call');
     return res.status(201).json({ message: 'Cart inserted successfully' });
   } catch (error) {
@@ -83,7 +81,7 @@ const deleteCartByIdController = async (req, res) => {
 
 module.exports = {
   addItemController,
-  insertCartsController,
   getCartController,
+  updateCartController,
   deleteCartByIdController,
 };

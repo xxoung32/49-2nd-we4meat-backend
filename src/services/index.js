@@ -20,7 +20,7 @@ const {
 
 const {
   addItemService,
-  insertCartsService,
+  updateCartService,
   getCartService,
   deleteCartByIdService,
 } = require('./cartService');
@@ -45,7 +45,7 @@ module.exports = {
   },
   cartService: {
     addItemService,
-    insertCartsService,
+    updateCartService,
     getCartService,
     deleteCartByIdService,
   },

@@ -19,7 +19,7 @@ const {
 const {
   addItemDao,
   getCartDao,
-  insertCartsDao,
+  updateCartDao,
   deleteCartByIdDao,
   deleteExistingCartsDao,
 } = require('./cartDao');
@@ -46,7 +46,7 @@ module.exports = {
   cartDao: {
     addItemDao,
     getCartDao,
-    insertCartsDao,
+    updateCartDao,
     deleteCartByIdDao,
     deleteExistingCartsDao,
   },
