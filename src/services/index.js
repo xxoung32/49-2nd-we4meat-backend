@@ -18,6 +18,12 @@ const {
   deleteReviewService,
 } = require('./reviewService');
 
+const {
+  addItemService,
+  getCartService,
+  updateCartService,
+} = require('./cartService');
+
 module.exports = {
   userService: {
     createUserService,
@@ -35,5 +41,10 @@ module.exports = {
     createReviewService,
     updateReviewService,
     deleteReviewService,
+  },
+  cartService: {
+    addItemService,
+    getCartService,
+    updateCartService,
   },
 };
