@@ -8,10 +8,15 @@ const {
   deleteExistingCartsDao,
 } = cartDao;
 
-// 장바구니 아이템 (제품) 추가
+// 장바구니 아이템 (제품) 추가 - 완
 const addItemService = async (customerId, productId, quantity) => {
   return await addItemDao(customerId, productId, quantity)
 }
+
+// 장바구니 목록 조회 - 완
+const getCartService = async (customerId) => {
+  return await getCartDao(customerId);
+};
 
 // 장바구니 생성하기
 const insertCartsService = async (customerId, products) => {
@@ -34,20 +39,7 @@ const insertCartsService = async (customerId, products) => {
   return 'INSERT_COMPLITED.';
 };
 
-// 장바구니 목록 조회
-const getCartService = async (customersId) => {
-  console.log('2.getCarts by id service connected'); //레이어드 패턴 연결확인
-  const getCartsByCustomerId = await getCartsByCustomerIdDao(customersId);
-  //장바구니가 비어있을 때 ====> 빈 배열로 반환하고 메세지 표시 "장바구니가 비었습니다"
-  const getCartsByCustomerIdLength = getCartsByCustomerId.length;
-  if (getCartsByCustomerIdLength === 0) {
-    return {
-      data: [],
-      message: '장바구니가 비었습니다',
-    };
-  }
-  return getCartsByCustomerId;
-};
+
 
 //장바구니 삭제
 const deleteCartByIdService = async (id, customerId) => {

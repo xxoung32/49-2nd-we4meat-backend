@@ -1,33 +1,37 @@
 const { dataSource } = require('./dataSource');
 
-
-// 장바구니 아이템 (제품) 추가
-const addItemDao = async(customerId, productId, quantity) => {
-    const status = 1;
-    return await dataSource.query(
-        `
-        INSERT
-        INTO carts (customer_id, product_id, quantity, status)
-        VALUES (?, ? ,?, ?)
-        `, [customerId, productId, quantity, status]
-    )
+// 장바구니 아이템 (제품) 추가 - 완
+const addItemDao = async (customerId, productId, quantity) => {
+  const status = 1;
+  return await dataSource.query(
+    `
+    INSERT
+    INTO carts (customer_id, product_id, quantity, status)
+    VALUES (?, ? ,?, ?)
+    `,
+    [customerId, productId, quantity, status],
+  );
 };
 
-// 장바구니 조회
+// 장바구니 조회 - 완
 const getCartDao = async (customerId) => {
-    console.log('3. getCartsByIdDao connected'); // 레이어드 패턴 연결확인
-    const getCartsData = await dataSource.query(
-      `
-          SELECT c.id, p.product_name, p.product_img, p.weight, cart.quantity, p.price, (cart.quantity * p.price) AS price 
-          FROM customers AS c 
-          JOIN carts AS cart ON c.id = cart.customer_id 
-          JOIN products AS p ON cart.product_id = p.id 
-          WHERE cart.status = 1 AND c.id = ? `,
-      [customerId], // 배열로 전달하기
-    );
-    console.log('getCartsDataById: ', getCartsData); //데이터 확인
-    return getCartsData;
-  };
+  const status = 1;
+  return await dataSource.query(
+    `
+    SELECT c.id AS customerId,
+      p.product_name AS productName, 
+      p.product_img AS productImg, 
+      p.weight, 
+      cart.quantity, 
+      p.price AS unitPrice, 
+      (cart.quantity * p.price) AS totalPrice
+    FROM customers AS c
+    JOIN carts AS cart ON c.id = cart.customer_id 
+    JOIN products AS p ON cart.product_id = p.id 
+    WHERE cart.status = ? AND c.id = ? `,
+    [status, customerId],
+  );
+};
 
 // 장바구니 최종 업데이트(생성)
 const insertCartsDao = async (customerId, productId, quantity) => {
@@ -56,8 +60,6 @@ const deleteExistingCartsDao = async (customerId) => {
   console.log('delete exsiting cart: ', existingCartData);
   return existingCartData;
 };
-
-
 
 // //장바구니 상태변경(2는 주문상태 3은 구매완료) =====> order함수를 불러오든 아님 order에서 처리하든 해야될 거 같아서 일단 보류함
 // const cartsStatusDao = async () => {

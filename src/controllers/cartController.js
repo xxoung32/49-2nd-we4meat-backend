@@ -7,7 +7,7 @@ const {
   deleteCartByIdService,
 } = cartService;
 
-// 장바구니 생성
+// 장바구니 아이템 (제품) 추가 - 완
 const addItemController = async (req, res) => {
   try {
     const customerId = req.user.id;
@@ -25,16 +25,11 @@ const addItemController = async (req, res) => {
   }
 };
 
-// 장바구니 목록 조회
-const getCartController = async (req, res) => {
+// 장바구니 목록 조회 - 완
+const getCartController = async (req, res, next) => {
   try {
-    console.log('1.getCarts by id controller connected'); //레이어드 패턴 연결확인
     const customerId = req.user.id;
-    //필수값 확인하기
     if (!customerId) throwError(400, 'NO_KEY');
-
-    //Business logic
-    console.log('4.controller file after get carts service function call');
     return res.status(200).json({
       message: 'CART_LOADED',
       data: await getCartService(customerId),
@@ -45,7 +40,7 @@ const getCartController = async (req, res) => {
   }
 };
 
-// 장바구니 아이템 (제품) 추가
+// 장바구니 업데이트
 const insertCartsController = async (req, res) => {
   try {
     console.log('1.createCarts controller connect'); //레이어드 패턴 연결확인
