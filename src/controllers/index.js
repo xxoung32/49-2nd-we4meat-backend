@@ -16,10 +16,9 @@ const {
   deleteReviewController,
 } = require('./reviewController');
 const {
-  getCartController,
   addItemController,
+  getCartController,
   updateCartController,
-  deleteCartByIdController,
 } = require('./cartController');
 
 module.exports = {
@@ -41,9 +40,8 @@ module.exports = {
     deleteReviewController,
   },
   cartController: {
-    getCartController,
     addItemController,
+    getCartController,
     updateCartController,
-    deleteCartByIdController,
   },
 };

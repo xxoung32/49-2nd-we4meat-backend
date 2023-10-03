@@ -17,11 +17,9 @@ const {
 } = require('./reviewDao');
 
 const {
-  addItemDao,
+  updateItemDao,
   getCartDao,
-  updateCartDao,
-  deleteCartByIdDao,
-  deleteExistingCartsDao,
+  purgeCartDao,
 } = require('./cartDao');
 
 module.exports = {
@@ -44,10 +42,8 @@ module.exports = {
     deleteReviewDao,
   },
   cartDao: {
-    addItemDao,
+    updateItemDao,
     getCartDao,
-    updateCartDao,
-    deleteCartByIdDao,
-    deleteExistingCartsDao,
+    purgeCartDao,
   },
 };
