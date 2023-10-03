@@ -18,7 +18,11 @@ const {
   deleteReviewService,
 } = require('./reviewService');
 
-const cartsService = require('./cartsService')
+const {
+  insertCartsService,
+  getCarstByCustomerIdService,
+  deleteCartByIdService,
+} = require('./cartsService');
 
 module.exports = {
   userService: {
@@ -38,5 +42,9 @@ module.exports = {
     updateReviewService,
     deleteReviewService,
   },
-  cartsService
+  cartsService: {
+    insertCartsService,
+    getCarstByCustomerIdService,
+    deleteCartByIdService,
+  },
 };
