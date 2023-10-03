@@ -13,16 +13,29 @@ const { dataSource } = require('./dataSource');
 // 가능하면, 포스맨으로 통신 성공한다음에... 포스트맨 리턴 값을 프론트에 전달할수 있을만한거... 정리해주시면 좋을것 같아요. 
 
 // 장바구니 최종 업데이트(생성)
-const insertCartsDao = async (customer_id, product_id, quantity) => {
+const insertCartsDao = async (customerId, productId, quantity) => {
     console.log("3.insert carts dao connected"); // 레이어드 패턴 연결확인
     const insertCartsData = await dataSource.query(`
     INSERT INTO carts (customer_id, product_id, quantity)
     VALUES (?, ?, ?)`,
-        [customer_id, product_id, quantity ] //배열로 전달하기
+        [customerId, productId, quantity ] //배열로 전달하기
     );
     console.log("insertCartsdata: ", insertCartsData); //데이터 확인
     return insertCartsData;
-}
+};
+
+
+// 장바구니 기존 카트 삭제하기
+const deleteExistingCartsDao = async (customerId) => {
+    console.log("3.delete existing cart dao connected");//레이어드 패턴 연결확인
+    const existingCartData = await dataSource.query(`
+        DELETE 
+        FROM carts
+        WHERE customer_id = ?
+    `,[ customerId ])
+    console.log("delete exsiting cart: ", existingCartData)
+    return existingCartData;
+};
 
 //장바구니 목록 조회 데이터 ====> 통신 완료
 const getCartsByCustomerIdDao = async (customersId) => {
@@ -67,5 +80,6 @@ const deleteCartByIdDao = async (product_id, customer_id) => {
 module.exports = {
     insertCartsDao,
     getCartsByCustomerIdDao,
-    deleteCartByIdDao
+    deleteCartByIdDao,
+    deleteExistingCartsDao
 };

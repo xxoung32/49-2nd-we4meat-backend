@@ -10,15 +10,15 @@ const insertCartsController = async (req, res) => {
   try {
     console.log("1.createCarts controller connect")//레이어드 패턴 연결확인
     const customerId = req.body.customerId
-    const { productId, quantity } = req.body.products[0]
+    const products = req.body.products
     console.log(req.body.products.length, 'body legnth')
     // console.log(productId, "제품 아이디라고");
     // console.log(quantity, "제품 수량이라고");
     //필수값 확인하기
-    if (!customerId || !productId || !quantity) throwError(400, "필수 필드를 확인해주세요");
+    if (!customerId || !products) throwError(400, "필수 필드를 확인해주세요");
     //Business logic
-    console.log("장난하지 말고 되라고", await insertCartsService(customerId, productId, quantity))
-    await insertCartsService(customerId, productId, quantity)
+    // console.log("장난하지 말고 되라고(controller)", await insertCartsService(customerId, products))
+    await insertCartsService(customerId, products)
     console.log("4.controller file after create carts service function call")
     return res.status(201).json({ message: "Cart inserted successfully" });
 
