@@ -22,6 +22,8 @@ const {
   updateItemDao,
   getCartDao,
   purgeCartDao,
+  existingItemCheckDao,
+  updateQuantityDao
 } = require('./cartDao');
 
 const {
@@ -63,6 +65,8 @@ module.exports = {
     updateItemDao,
     getCartDao,
     purgeCartDao,
+    existingItemCheckDao,
+    updateQuantityDao,
   },
   orderDao: {
     customerCartDao,
