@@ -20,7 +20,7 @@ const getCartDao = async (customerId) => {
       // status를 상수로 선언을 하게 되면 where절을 사용해서 필터링 하는 것보다 가독성과 유지보수성이 더 좋아진다.
   return await dataSource.query(
     `
-    SELECT c.id AS customerId,
+    SELECT p.id AS productId,
       p.product_name AS productName,
       p.product_img AS productImg,
       p.weight,
