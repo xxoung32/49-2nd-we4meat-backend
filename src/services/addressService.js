@@ -8,16 +8,16 @@ const getOrderAddressService = async (userId) => {
   return getaddress;
 };
 
-// const createOrderAddressService = async (addressId, userId) => {
-//   return await addressDao.postOrderAddressService(addressId, userId);
-// };
+const createOrderAddressDao = async (addressId, userId) => {
+  return await addressDao.postOrderAddressDao(addressId, userId);
+};
 
-// const deleteOrderAddressService = async (addressId, userId) => {
-//   return await addressDao.deleteOrderAddressService(addressId, userId);
-// };
+const deleteOrderAddressDao = async (addressId, userId) => {
+  return await addressDao.deleteOrderAddressDao(addressId, userId);
+};
 
 module.exports = {
   getOrderAddressService,
-  // deleteOrderAddressService,
-  // createOrderAddressService,
+  deleteOrderAddressDao,
+  createOrderAddressDao,
 };

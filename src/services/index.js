@@ -10,7 +10,6 @@ const {
   getOrdersService,
   addToOrdersService,
   cancelOrdersService,
-  createOrderAddressService,
 } = require('./orderService');
 
 const {
@@ -25,6 +24,14 @@ const {
   deleteReviewService,
 } = require('./reviewService');
 
+const {
+  addItemService,
+  getCartService,
+  updateCartService,
+} = require('./cartService');
+
+const { getOrderAddressService } = require('./addressService');
+
 module.exports = {
   userService: {
     createUserService,
@@ -38,7 +45,6 @@ module.exports = {
     getOrdersService,
     addToOrdersService,
     cancelOrdersService,
-    createOrderAddressService,
   },
   productService: {
     listProductsService,
@@ -49,5 +55,13 @@ module.exports = {
     createReviewService,
     updateReviewService,
     deleteReviewService,
+  },
+  cartService: {
+    addItemService,
+    getCartService,
+    updateCartService,
+  },
+  addressService: {
+    getOrderAddressService,
   },
 };

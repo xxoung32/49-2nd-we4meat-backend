@@ -1,9 +1,10 @@
-// const express = require('express');
+const express = require('express');
+const { verifyToken } = require('../../middlewares');
+const { addressController } = require('../controllers');
+const router = express.Router();
 
-// const router = express.Router();
+router.get('/', verifyToken, addressController.getAddressController);
+// router.post('/create', verifyToken);
+// router.patch('/delete', verifyToken)
 
-// // router.get('/', verifyToken);
-// // router.post('/create', verifyToken);
-// // router.patch('/delete', verifyToken)
-
-// module.exports;
+module.exports = router;

@@ -1,4 +1,4 @@
-// const { orderStatusEnum } = require('./enums');
+const enums = require('./enums');
 
 const {
   getVerificationCodeDao,
@@ -10,8 +10,6 @@ const {
 } = require('./userDao');
 const {
   getOrdersDao,
-  postOrderAddressDao,
-  customerAddressDao,
   getOrderListDao,
   customerCartDao,
   checkOrderStatusDao,
@@ -29,6 +27,18 @@ const {
   deleteReviewDao,
 } = require('./reviewDao');
 
+const {
+  updateItemDao,
+  getCartDao,
+  purgeCartDao,
+} = require('./cartDao');
+
+const {
+  postOrderAddressDao,
+  customerAddressDao,
+  getAddressDao,
+} = require('./addressDao');
+
 module.exports = {
   userDao: {
     getVerificationCodeDao,
@@ -40,8 +50,6 @@ module.exports = {
   },
   orderDao: {
     getOrdersDao,
-    postOrderAddressDao,
-    customerAddressDao,
     getOrderListDao,
     customerCartDao,
     checkOrderStatusDao,
@@ -49,9 +57,7 @@ module.exports = {
     MoveCartToOrderDao,
     cancelOrdersDao,
   },
-  // eums: {
-  //   orderStatusEnum,
-  // }
+  enums,
   productDao: {
     listProductsDao,
     productDetailDao,
@@ -61,5 +67,15 @@ module.exports = {
     createReviewDao,
     updateReviewDao,
     deleteReviewDao,
+  },
+  cartDao: {
+    updateItemDao,
+    getCartDao,
+    purgeCartDao,
+  },
+  addressDao: {
+    postOrderAddressDao,
+    customerAddressDao,
+    getAddressDao,
   },
 };
