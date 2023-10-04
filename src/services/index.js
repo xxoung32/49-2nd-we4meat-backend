@@ -19,6 +19,12 @@ const {
 } = require('./reviewService');
 
 const {
+  addItemService,
+  getCartService,
+  updateCartService,
+} = require('./cartService');
+
+const {
   walletRechargeService,
   walletDeductionService,
   getOrderlistService,
@@ -48,5 +54,10 @@ module.exports = {
     walletDeductionService,
     getOrderlistService,
     getWalletBalanceService,
+  cartService: {
+    addItemService,
+    getCartService,
+    updateCartService,
   },
 };
+}

@@ -16,6 +16,8 @@ const {
   deleteReviewDao,
 } = require('./reviewDao');
 
+const { updateItemDao, getCartDao, purgeCartDao } = require('./cartDao');
+
 const {
   getWalletBalanceDao,
   walletUpdateDao,
@@ -40,6 +42,11 @@ module.exports = {
     createReviewDao,
     updateReviewDao,
     deleteReviewDao,
+  },
+  cartDao: {
+    updateItemDao,
+    getCartDao,
+    purgeCartDao,
   },
   paymentDao: {
     getWalletBalanceDao,

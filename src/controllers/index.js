@@ -15,6 +15,11 @@ const {
   updateReviewController,
   deleteReviewController,
 } = require('./reviewController');
+const {
+  addItemController,
+  getCartController,
+  updateCartController,
+} = require('./cartController');
 
 const {
   checkAmountController,
@@ -40,6 +45,11 @@ module.exports = {
     createReviewController,
     updateReviewController,
     deleteReviewController,
+  },
+  cartController: {
+    addItemController,
+    getCartController,
+    updateCartController,
   },
   paymentController: {
     checkAmountController,
