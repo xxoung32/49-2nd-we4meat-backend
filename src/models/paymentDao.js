@@ -36,7 +36,7 @@ const walletUpdateDao = async (newCredit, customerId) => {
 
 // 오더상태 변경 Dao 아직 구현 못함
 // const payStatusChangeDao = async (orderId) => {
-//   const order_status = await dataSource.query(
+//   const orderstatus_change = await dataSource.query(
 //     `UPDATE orders SET payStatus = '2' WHERE id = ?`,
 //     [orderId],
 //   );
@@ -47,4 +47,5 @@ module.exports = {
   getWalletBalanceDao,
   walletUpdateDao,
   getOrderAmountDao,
+  //payStatusChangeDao
 };
