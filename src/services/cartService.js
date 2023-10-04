@@ -1,7 +1,7 @@
 const { cartDao } = require('../models');
 const { updateItemDao, getCartDao, purgeCartDao } = cartDao;
 
-// 장바구니 아이템 (제품) 추가 - 완
+// 장바구니 아이템 (제품) 개별 추가 - 완
 const addItemService = async (customerId, productId, quantity) => {
   return await updateItemDao(customerId, productId, quantity);
 };
