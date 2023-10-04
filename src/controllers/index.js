@@ -22,7 +22,8 @@ const {
 } = require('./cartController');
 const {
   createOrderController,
-  getOrdersController,
+  getOrderListController,
+  getOrderDetailController,
   cancelOrdersController,
 } = require('./orderController');
 
@@ -53,7 +54,8 @@ module.exports = {
   },
   orderController: {
     createOrderController,
-    getOrdersController,
+    getOrderListController,
+    getOrderDetailController,
     cancelOrdersController,
   },
   addressController: {

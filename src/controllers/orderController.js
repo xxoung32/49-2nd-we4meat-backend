@@ -1,16 +1,19 @@
 const { orderService } = require('../services');
-const { createOrderService, getOrdersService, cancelOrdersService } =
-  orderService;
+const {
+  createOrderService,
+  getOrderListService,
+  getOrderDetailService,
+  cancelOrdersService,
+} = orderService;
 const { throwError } = require('../../utils');
 
-//주문하기
+//주문하기 - 구현완료, 생성완료
 const createOrderController = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { totalPrice } = req.body;
     if (!userId) throwError(400, "KEY_ERROR_UID");
     if (!totalPrice) throwError(400, "KEY_ERROR_TP");
-
     return res.status(200).json({
       message: 'ORDER_CREATED',
       data: await createOrderService(userId, totalPrice),
@@ -21,19 +24,38 @@ const createOrderController = async (req, res, next) => {
   }
 };
 
-//주문정보 불러오기
-const getOrdersController = async (req, res, next) => {
+// 주문 목록 불러오기
+const getOrderListController = async (req, res, next) => {
   try {
     const userId = req.user.id;
+    if (!userId) throwError(400, "KEY_ERROR_UID");
     return res.status(200).json({
-      message: 'ORDER_LOADED',
-      data: await getOrdersService(userId),
+      message: 'ORDER_LIST_LOADED',
+      data: await getOrderListService(userId),
     });
   } catch (err) {
     console.error(err);
     next(err);
   }
 };
+
+// 주문 생성 불러오기
+const getOrderDetailController = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    if (!userId) throwError(400, "KEY_ERROR_UID");
+    if (req?.query.Id == null) throwError(400, 'KEY_ERROR_OID');
+    const orderId = req.query.Id;
+    return res.status(200).json({
+      message: 'ORDER_DETAIL_LOADED',
+      data: await getOrderDetailService(userId, orderId),
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
 
 //주문취소
 const cancelOrdersController = async (req, res, next) => {
@@ -51,6 +73,7 @@ const cancelOrdersController = async (req, res, next) => {
 };
 module.exports = {
   createOrderController,
-  getOrdersController,
+  getOrderListController,
+  getOrderDetailController,
   cancelOrdersController,
 };

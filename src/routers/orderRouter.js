@@ -3,14 +3,16 @@ const { verifyToken } = require('../../middlewares');
 const { orderController } = require('../controllers');
 const {
     createOrderController,
-    getOrdersController,
+    getOrderListController,
+    getOrderDetailController,
     cancelOrdersController,
   } = orderController
 
 const router = express.Router();
 
-router.get('/', verifyToken, getOrdersController);
 router.post('/', verifyToken, createOrderController);
+router.get('/', verifyToken, getOrderListController);
+router.get('/detail', verifyToken,getOrderDetailController);
 router.post('/cancel', verifyToken, cancelOrdersController);
 
 module.exports = router;

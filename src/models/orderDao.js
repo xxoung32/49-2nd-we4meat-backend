@@ -1,139 +1,90 @@
 const { dataSource } = require('./dataSource');
 const { orderStatusEnum } = require('./enums');
-//주문 상세 정보 불러오기
-const getOrdersDao = async (userId, orderId) => {
-  return await dataSource.query(
-    `
-        SELECT customers.id,
-        customers.email,
-        customers.name,
-        customers.phonenumber,
-        customers.address,
-        customer_address.customer_id,
-        orders.order_item_id 
-        FROM customers
-        LEFT JOIN customer_address ON 
-        customers.id = customer_address.customer_id
-        LEFT JOIN orders on customers.id = orders.customer_id
-        WHERE customers.id = ? && orders.id = ?;
-        `,
-    [userId, orderId],
-  );
-};
 
-//주문 목록 불러오기도 있어야 할것 같음.
-const getOrderListDao = async (userId) => {
-  return await dataSource.query(
-    `
-    SELECT total_amount, created_at, payment_id, order_item_id,
-    FROM orders 
-    WHERE orders.customers_id = ${userId};
-    `,
-  );
-};
-
-//주문 배송지, 요청사항 입력
-const postOrderAddressDao = async (address, text) => {
-  await dataSource.query(
-    `
-        INSERT INTO customers_address
-        (
-        customers_id,
-        address,
-        text
-        )
-        VALUES
-        (
-        '${customers_id}',
-        '${address}',
-        '${text}'
-        )`,
-  );
-};
-//주소 추가
-const customerAddressDao = async (address) => {
-  await dataSource.query(
-    `
-        INSERT INTO customers
-        (
-        address
-        )
-        VALUES
-        (
-        '${address}'
-        )`,
-  );
-};
-//카트정보 불러오기
+//카트정보 불러오기 - 구현완, 사용중
 const customerCartDao = async (userId) => {
+  const status = 1;
   return await dataSource.query(
     `
       SELECT
-      product_id,
+      product_id AS productId,
       quantity
       FROM carts
-      WHERE customer_id =?;`,
-    [userId],
+      WHERE customer_id =? & status = ?;`,
+    [userId, status],
   );
 };
 
-const MoveCartToOrderDao = async (userId, totalPrice, customers_Carts) => {
+// 장바구니에 있는 제품들 오더/오더_아이템 테이블로 이동 - 구현완, 사용중
+const MoveCartToOrderDao = async (userId, totalPrice) => {
   const queryRunner = dataSource.createQueryRunner();
   await queryRunner.connect();
   await queryRunner.startTransaction();
 
   try {
-    const customers_Carts = await dataSource.query(`
-    SELECT * FROM carts
-  `);
-    await queryRunner.query(
+    // 고객 장바구니 불러오기
+    const customerCart = await dataSource.query(
+    `
+    SELECT * FROM carts WHERE customer_id = ? & status = 1;
+    `,
+      [userId],
+    );
+
+    // Orders Table : Init & Total Price 에 값 넣어 주기
+    await dataSource.query(
       `
-          UPDATE customers_wallet 
-          SET
-              credit=credit-?
-          WHERE id=?;`,
+      INSERT INTO orders (total_amount, customer_id)
+      VALUES (?, ?)
+      `,
       [totalPrice, userId],
     );
 
-    for (
-      var baseNumber = 0;
-      baseNumber < customers_Carts.length;
-      baseNumber++
-    ) {
+    const orderId = await dataSource.query(
+      `
+      SELECT id AS orderId FROM orders WHERE customer_id = ?
+      `, [userId]
+    );
+
+    // 불러온 장바구니 아이템을 orders 테이블에 넣어 주는 반복문
+    for (var baseNumber = 0; baseNumber < customerCart.length; baseNumber++) {
       await queryRunner.query(
         `
-              INSERT INTO orders(
-                  customer_id,
-                  product_id,
-                  quantity,
-                  order_status_id
-              ) VALUES (?,?,?,?);`,
+              INSERT INTO order_items (
+                order_id,
+                customer_id,
+                product_id,
+                quantity
+              ) VALUES (?, ?, ?, ?);`,
         [
+          orderId[0].orderId,
           userId,
-          customers_Carts[baseNumber].product_option_id,
-          customers_Carts[baseNumber].quantity,
-          orderStatusEnum.ADDED,
+          customerCart[baseNumber].product_id,
+          customerCart[baseNumber].quantity,
+          // orderStatusEnum.ADDED,
         ],
       );
     }
 
+    // Soft Delete
     const deleteCarts = await queryRunner.query(
       `
-          DELETE
-          FROM carts
-          WHERE customers_id=?;`,
+      UPDATE carts
+      SET status = 2
+      WHERE customer_id = ? & status = 1;
+      `,
       [userId],
     );
     await queryRunner.commitTransaction();
     return deleteCarts;
   } catch (err) {
+    console.error(err);
     await queryRunner.rollbackTransaction();
   } finally {
     await queryRunner.release();
   }
 };
 
-//주문 상세확인
+//주문 상태
 const checkOrderStatusDao = async (orderId) => {
   const orderStatus = await dataSource.query(
     `
@@ -149,18 +100,52 @@ const checkOrderStatusDao = async (orderId) => {
     return orderStatus[1].osi;
   }
 };
-//진액확인
-const checkCreditDao = async (userId, userWalletId) => {
+
+//주문 목록 불러오기도 있어야 할것 같음.
+
+// id
+const getOrderListDao = async (userId) => {
   return await dataSource.query(
     `
-      SELECT
-      customers.id,
-      customer_wallets.customer_id,
-      customer_wallets.credit,
-      customer_wallets.id
-      FROM customer_wallets LEFT JOIN customers ON customers.id = customer_wallets.customer_id
-      WHERE customers.id = ? && customer_wallets.customer_id =?`,
-    [userId, userWalletId],
+    SELECT
+      o.id AS orderId,
+      JSON_ARRAYAGG(
+        JSON_OBJECT(
+          'productName', p.product_name,
+          'quantity', oi.quantity,
+          'price', p.price,
+          'totalPrice', (oi.quantity * p.price)
+        )
+      ) AS orderItems,
+      o.created_at AS orderDate
+    FROM orders o
+    JOIN order_items oi ON oi.order_id = o.id
+    JOIN products p on oi.product_id = p.id
+    WHERE o.customer_id = ?
+    GROUP BY oi.order_id
+    `,
+    [userId],
+  );
+};
+
+// 주문 : 상세 정보 불러오기
+const getOrderDetailDao = async (userId, orderId) => {
+  return await dataSource.query(
+    `
+        SELECT customers.id,
+        customers.email,
+        customers.name,
+        customers.phonenumber,
+        customers.address,
+        customer_address.customer_id,
+        orders.id AS orderId
+        FROM customers
+        LEFT JOIN customer_address ON
+        customers.id = customer_address.customer_id
+        LEFT JOIN orders on customers.id = orders.customer_id
+        WHERE customers.id = ? & orders.id = ?;
+        `,
+    [userId, orderId],
   );
 };
 
@@ -197,13 +182,10 @@ const cancelOrdersDao = async (userId, orderId, totalPrice) => {
 };
 
 module.exports = {
-  getOrdersDao,
-  postOrderAddressDao,
-  customerAddressDao,
-  getOrderListDao,
   customerCartDao,
-  checkOrderStatusDao,
-  checkCreditDao,
   MoveCartToOrderDao,
+  getOrderListDao,
+  getOrderDetailDao,
+  checkOrderStatusDao,
   cancelOrdersDao,
 };

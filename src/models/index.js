@@ -25,14 +25,13 @@ const {
 } = require('./cartDao');
 
 const {
-  getOrdersDao,
-  getOrderListDao,
-  customerCartDao,
-  checkOrderStatusDao,
-  checkCreditDao,
-  MoveCartToOrderDao,
-  cancelOrdersDao,
-} = require('./orderDao');
+    customerCartDao,
+    MoveCartToOrderDao,
+    getOrderListDao,
+    getOrderDetailDao,
+    checkOrderStatusDao,
+    cancelOrdersDao,
+  } = require('./orderDao');
 
 const {
   postOrderAddressDao,
@@ -66,12 +65,11 @@ module.exports = {
     purgeCartDao,
   },
   orderDao: {
-    getOrdersDao,
-    getOrderListDao,
     customerCartDao,
-    checkOrderStatusDao,
-    checkCreditDao,
     MoveCartToOrderDao,
+    getOrderListDao,
+    getOrderDetailDao,
+    checkOrderStatusDao,
     cancelOrdersDao,
   },
   addressDao: {

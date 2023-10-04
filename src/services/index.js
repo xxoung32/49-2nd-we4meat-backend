@@ -26,8 +26,8 @@ const {
 
 const {
   createOrderService,
-  getOrdersService,
-  addToOrdersService,
+  getOrderListService,
+  getOrderDetailService,
   cancelOrdersService,
 } = require('./orderService');
 
@@ -58,8 +58,8 @@ module.exports = {
   },
   orderService: {
     createOrderService,
-    getOrdersService,
-    addToOrdersService,
+    getOrderListService,
+    getOrderDetailService,
     cancelOrdersService,
   },
   addressService: {
