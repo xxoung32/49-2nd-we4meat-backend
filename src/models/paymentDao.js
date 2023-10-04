@@ -17,10 +17,10 @@ const getOrderAmountDao = async (customerId) => {
   return checkTotalAmount;
 };
 
-const walletUpdateDao = async (credit, customerId) => {
+const walletUpdateDao = async (newCredit, customerId) => {
   const customer_wallet = await dataSource.query(
     `UPDATE customer_wallets SET credit = ? WHERE customer_id = ?`,
-    [credit, customerId],
+    [newCredit, customerId],
   );
 
   return customer_wallet;

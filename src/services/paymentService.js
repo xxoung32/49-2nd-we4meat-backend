@@ -24,12 +24,14 @@ const walletRechargeService = async (chargeAmount, customerId) => {
 
 //  차감
 
-const walletDeductionService = async (credit, customerId) => {
+const walletDeductionService = async (customerId) => {
   const currentCredit = await getWalletBalanceDao(customerId);
   const orderAmount = await getOrderAmountDao(customerId);
-  const newCredit = currentCredit - orderAmount;
-  console.log(currentCredit);
-  console.log(orderAmount);
+
+  console.log('현재잔고', currentCredit);
+  console.log('현재물품', orderAmount);
+  const newCredit = currentCredit[0].credit - orderAmount[0].total_amount;
+  console.log('차감가격', newCredit);
   return walletUpdateDao(newCredit, customerId);
 };
 

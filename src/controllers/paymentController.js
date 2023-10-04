@@ -14,14 +14,15 @@ const checkAmountController = async (req, res, next) => {
     const { id } = req.user;
     const orderAmount = await getOrderlistService(id);
     const walletCredit = await getWalletBalanceService(id);
-    if (!walletCredit) {
+    if (!walletCredit[0].credit) {
       throwError(400, 'Wallet not found');
-    } else if (walletCredit < orderAmount) {
+    } else if (walletCredit[0].credit < orderAmount[0].total_amount) {
       throwError(400, 'Insufficient balance');
     }
-    return res
-      .status(200)
-      .json({ 'Reserve balance': walletCredit, 'Order Amount': orderAmount });
+    return res.status(200).json({
+      'Reserve balance': walletCredit[0].credit,
+      'Order Amount': orderAmount[0].total_amount,
+    });
   } catch (err) {
     console.log(err);
     next(err);
@@ -33,7 +34,6 @@ const walletDeductionController = async (req, res, next) => {
     const { id } = req.user;
     const itemPayment = await walletDeductionService(id);
     return res.status(200).json({ message: 'Complete payment' });
-    // 오더상태 변경
   } catch (err) {
     console.log(err);
     next(err);
@@ -51,12 +51,14 @@ const walletRechargeController = async (req, res, next) => {
     if (!walletNewCredit) {
       throwError(400, 'Charging errors');
     }
-    return res.status(200).json({ 'Total amount': walletNewCredit });
+    return res.status(200).json({ 'Total amount': walletNewCredit[0].Credit });
   } catch (err) {
     console.log(err);
     next(err);
   }
 };
+
+// 오더상태 변경
 
 module.exports = {
   checkAmountController,
