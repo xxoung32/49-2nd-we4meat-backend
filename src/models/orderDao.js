@@ -174,7 +174,7 @@ const cancelOrdersDao = async (userId, orderId, totalPrice) => {
       `
           UPDATE customer_wallets
           SET
-              point=point+?
+              credit=credit+?
           WHERE id=?;`,
       [totalPrice, userId],
     );
