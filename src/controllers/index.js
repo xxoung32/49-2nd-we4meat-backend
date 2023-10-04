@@ -36,11 +36,6 @@ module.exports = {
     loginController,
     dupliCheckController,
   },
-  orderController: {
-    getOrdersController,
-    addToOrdersController,
-    cancelOrdersController,
-  },
   productController: {
     listProductController,
     productDetailController,
@@ -55,6 +50,11 @@ module.exports = {
     addItemController,
     getCartController,
     updateCartController,
+  },
+  orderController: {
+    getOrdersController,
+    addToOrdersController,
+    cancelOrdersController,
   },
   addressController: {
     getAddressController,

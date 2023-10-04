@@ -8,15 +8,6 @@ const {
   dupliCheckEmailDao,
   dupliCheckPhoneDao,
 } = require('./userDao');
-const {
-  getOrdersDao,
-  getOrderListDao,
-  customerCartDao,
-  checkOrderStatusDao,
-  checkCreditDao,
-  MoveCartToOrderDao,
-  cancelOrdersDao,
-} = require('./orderDao');
 
 const { listProductsDao, productDetailDao } = require('./productDao');
 
@@ -34,12 +25,23 @@ const {
 } = require('./cartDao');
 
 const {
+  getOrdersDao,
+  getOrderListDao,
+  customerCartDao,
+  checkOrderStatusDao,
+  checkCreditDao,
+  MoveCartToOrderDao,
+  cancelOrdersDao,
+} = require('./orderDao');
+
+const {
   postOrderAddressDao,
   customerAddressDao,
   getAddressDao,
 } = require('./addressDao');
 
 module.exports = {
+  enums,
   userDao: {
     getVerificationCodeDao,
     setNewPasswordDao,
@@ -48,16 +50,6 @@ module.exports = {
     dupliCheckEmailDao,
     dupliCheckPhoneDao,
   },
-  orderDao: {
-    getOrdersDao,
-    getOrderListDao,
-    customerCartDao,
-    checkOrderStatusDao,
-    checkCreditDao,
-    MoveCartToOrderDao,
-    cancelOrdersDao,
-  },
-  enums,
   productDao: {
     listProductsDao,
     productDetailDao,
@@ -72,6 +64,15 @@ module.exports = {
     updateItemDao,
     getCartDao,
     purgeCartDao,
+  },
+  orderDao: {
+    getOrdersDao,
+    getOrderListDao,
+    customerCartDao,
+    checkOrderStatusDao,
+    checkCreditDao,
+    MoveCartToOrderDao,
+    cancelOrdersDao,
   },
   addressDao: {
     postOrderAddressDao,

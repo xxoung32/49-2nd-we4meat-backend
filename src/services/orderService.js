@@ -1,9 +1,21 @@
 const { throwError } = require('../../utils');
 const { orderDao, enums } = require('../models');
+const { orderStatusEnum } = enums
+const {
+  getOrdersDao,
+  postOrderAddressDao,
+  customerAddressDao,
+  getOrderListDao,
+  customerCartDao,
+  checkOrderStatusDao,
+  checkCreditDao,
+  MoveCartToOrderDao,
+  cancelOrdersDao,
+} = orderDao;
 
 //주문상세 불러오기
 const getOrdersService = async (userId) => {
-  const customerOrders = await orderDao.getOrdersDao(userId);
+  const customerOrders = await getOrdersDao(userId);
   if (!customerOrders[0]) {
     const error = new Error('Ordered_Nothing');
     error.statusCode = 400;
@@ -15,8 +27,8 @@ const getOrdersService = async (userId) => {
 
 //주문하기
 const addToOrdersService = async (userId, totalPrice) => {
-  const customers_Credit = await orderDao.checkCreditDao(userId);
-  const customers_Carts = await orderDao.customerCartDao(userId);
+  const customers_Credit = await checkCreditDao(userId);
+  const customers_Carts = await customerCartDao(userId);
 
   if (customers_Credit < totalPrice || totalPrice < 0) {
     const error = new Error('Not_Enough_Points');
@@ -34,9 +46,9 @@ const addToOrdersService = async (userId, totalPrice) => {
 };
 //주문취소하기
 const cancelOrdersService = async (userId, orderId, totalPrice) => {
-  const orderStatus = await orderDao.checkOrderStatusDao(orderId);
+  const orderStatus = await checkOrderStatusDao(orderId);
 
-  if (orderStatus == enums.orderStatusEnum.CANCELED) {
+  if (orderStatus == orderStatusEnum.CANCELED) {
     const error = new Error('Already_canceled');
     error.statusCode = 400;
 
