@@ -21,7 +21,7 @@ const { updateItemDao, getCartDao, purgeCartDao } = require('./cartDao');
 const {
   getWalletBalanceDao,
   walletUpdateDao,
-  getOrderlistDao,
+  getOrderAmountDao,
 } = require('./paymentDao');
 
 module.exports = {
@@ -51,6 +51,6 @@ module.exports = {
   paymentDao: {
     getWalletBalanceDao,
     walletUpdateDao,
-    getOrderlistDao,
+    getOrderAmountDao,
   },
 };

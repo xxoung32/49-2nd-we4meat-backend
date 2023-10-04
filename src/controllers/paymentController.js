@@ -31,7 +31,7 @@ const checkAmountController = async (req, res, next) => {
 const walletDeductionController = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const itemPayment = await walletDeductionService(orderAmount, id);
+    const itemPayment = await walletDeductionService(id);
     return res.status(200).json({ message: 'Complete payment' });
     // 오더상태 변경
   } catch (err) {
