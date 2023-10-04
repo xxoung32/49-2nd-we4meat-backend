@@ -20,6 +20,14 @@ const {
   getCartController,
   updateCartController,
 } = require('./cartController');
+const {
+  createOrderController,
+  getOrderListController,
+  getOrderDetailController,
+  cancelOrdersController,
+} = require('./orderController');
+
+const { getAddressController } = require('./addressController');
 
 module.exports = {
   userController: {
@@ -43,5 +51,14 @@ module.exports = {
     addItemController,
     getCartController,
     updateCartController,
+  },
+  orderController: {
+    createOrderController,
+    getOrderListController,
+    getOrderDetailController,
+    cancelOrdersController,
+  },
+  addressController: {
+    getAddressController,
   },
 };
