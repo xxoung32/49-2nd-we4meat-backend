@@ -1,12 +1,17 @@
 const { cartDao } = require('../models');
-const { updateItemDao, getCartDao, purgeCartDao, existingItemCheckDao,updateQuantityDao } = cartDao;
-
+const {
+  updateItemDao,
+  getCartDao,
+  purgeCartDao,
+  existingItemCheckDao,
+  updateQuantityDao,
+} = cartDao;
 
 // 장바구니 개별 아이템 (제품) 추가 - 완
 // 상품리스트 페이지에서 개별 아이템을 추가할 수 있어서 addItemService 함수를 추가
 const addItemService = async (customerId, productId, quantity) => {
   const existingCartItem = await existingItemCheckDao(customerId, productId);
-  console.log("existingCartItem: ", existingCartItem);
+  console.log('existingCartItem: ', existingCartItem);
   if (existingCartItem.length > 0) {
     // 이미 장바구니에 해당 제품이 있으면 수량 업데이트
     const cartId = existingCartItem[0].id;
