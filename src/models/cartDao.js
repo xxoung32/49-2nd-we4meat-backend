@@ -17,7 +17,7 @@ const getCartDao = async (customerId) => {
   const status = 1;
   return await dataSource.query(
     `
-    SELECT c.id AS customerId,
+    SELECT p.id AS productId,
       p.product_name AS productName,
       p.product_img AS productImg,
       p.weight,
