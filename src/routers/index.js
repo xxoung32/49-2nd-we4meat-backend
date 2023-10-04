@@ -9,8 +9,8 @@ const paymentRouter = require('./paymentRouter');
 router.use('/users', userRouter);
 router.use('/list', productRouter);
 router.use('/payment', paymentRouter);
-router.use('/payment/complete', paymentCompeleteRouter);
-router.use('/topupcredit', walletRechargeRouter);
+router.use('/paymentcomplete', paymentRouter);
+router.use('/topupcredit', paymentRouter);
 // router.use('/review', reviewRouter);
 
 module.exports = router;

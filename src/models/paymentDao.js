@@ -2,8 +2,7 @@ const { dataSource } = require('./dataSource');
 
 const getWalletBalanceDao = async (customerId) => {
   const checkWalletBalance = await dataSource.query(
-    `
-  SELECT credit FROM customer_wallets WHERE customer_id =?`,
+    `SELECT credit FROM customer_wallets WHERE customer_id =?`,
     [customerId],
   );
   return checkWalletBalance;

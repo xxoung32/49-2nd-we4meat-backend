@@ -16,6 +16,13 @@ const {
   deleteReviewController,
 } = require('./reviewController');
 
+const {
+  checkAmountController,
+  walletDeductionController,
+  walletRechargeController,
+  chargeAmount,
+} = require('./paymentController');
+
 module.exports = {
   userController: {
     signUpController,
@@ -33,5 +40,10 @@ module.exports = {
     createReviewController,
     updateReviewController,
     deleteReviewController,
+  },
+  paymentController: {
+    checkAmountController,
+    walletDeductionController,
+    walletRechargeController,
   },
 };

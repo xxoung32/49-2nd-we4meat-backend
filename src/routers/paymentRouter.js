@@ -1,15 +1,18 @@
 const express = require('express');
+const router = express.Router();
+
 const { paymentController } = require('../controllers');
+console.log('페이먼트', paymentController);
 const {
   checkAmountController,
   walletRechargeController,
   walletDeductionController,
 } = paymentController;
+console.log('페이먼트', paymentController);
 const { verifyToken } = require('../../middlewares');
-const router = express.Router();
 
 router.post('/', verifyToken, checkAmountController);
-router.patch('/complete', verifyToken, walletDeductionController);
-router.patch('/topupcredit', verifytoken, walletRechargeController);
+router.patch('/paymentcomplete', verifyToken, walletDeductionController);
+router.patch('/topupcredit', verifyToken, walletRechargeController);
 
 module.exports = router;
