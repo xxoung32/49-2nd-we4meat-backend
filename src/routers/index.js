@@ -10,7 +10,6 @@ const cartRouter = require('./cartRouter');
 router.use('/users', userRouter);
 router.use('/list', productRouter);
 router.use('/payment', paymentRouter);
-router.use('/paymentcomplete', paymentRouter);
 router.use('/topupcredit', paymentRouter);
 router.use('/review', reviewRouter);
 router.use('/cart', cartRouter);

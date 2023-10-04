@@ -54,10 +54,10 @@ module.exports = {
     walletDeductionService,
     getOrderlistService,
     getWalletBalanceService,
+  },
   cartService: {
     addItemService,
     getCartService,
     updateCartService,
   },
 };
-}
