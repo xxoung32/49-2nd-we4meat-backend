@@ -20,6 +20,7 @@ const checkAmountController = async (req, res, next) => {
       throwError(400, 'Insufficient balance');
     }
     return res.status(200).json({
+      message: 'Payments available',
       'Reserve balance': walletCredit[0].credit,
       'Order Amount': orderAmount[0].total_amount,
     });
@@ -51,7 +52,7 @@ const walletRechargeController = async (req, res, next) => {
     if (!walletNewCredit) {
       throwError(400, 'Charging errors');
     }
-    return res.status(200).json({ 'Total amount': walletNewCredit[0].Credit });
+    return res.status(200).json({ 'Total amount': walletNewCredit[0].credit });
   } catch (err) {
     console.log(err);
     next(err);

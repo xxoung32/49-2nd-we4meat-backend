@@ -17,25 +17,25 @@ const getWalletBalanceService = async (customerId) => {
 const walletRechargeService = async (chargeAmount, customerId) => {
   const currentCredit = await getWalletBalanceDao(customerId);
   const chargeCredit = await chargeAmount;
-  console.log('currentCredit', currentCredit);
-  const newCredit = currentCredit + chargeCredit;
-  return walletUpdateDao(newCredit, customerId);
+  const newCredit = currentCredit[0].credit + chargeCredit;
+  const chargewallet = await walletUpdateDao(newCredit, customerId);
+  return await getWalletBalanceDao(customerId);
 };
 
 //  차감
 
+//오더상태 변경<=== 이거 못함
+// const payStatusChangeService = async (orderId) =>{
+//   return await payStatusChangeDao(orderId);
+// }
+
 const walletDeductionService = async (customerId) => {
   const currentCredit = await getWalletBalanceDao(customerId);
   const orderAmount = await getOrderAmountDao(customerId);
-
-  console.log('현재잔고', currentCredit);
-  console.log('현재물품', orderAmount);
   const newCredit = currentCredit[0].credit - orderAmount[0].total_amount;
-  console.log('차감가격', newCredit);
+  // await payStatusChangeService(orderId);
   return walletUpdateDao(newCredit, customerId);
 };
-
-//오더상태 변경<=== 이거 못함
 
 module.exports = {
   walletRechargeService,
