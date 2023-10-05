@@ -51,7 +51,6 @@ const walletRechargeController = async (req, res, next) => {
     const walletNewCredit = await walletRechargeService(chargeAmount, id);
     if (!chargeAmount) throwError(400, 'NOT FOUND');
     if (!walletNewCredit) throwError(400, 'Charging errors');
-    console.log('이건 왜 안돼', walletNewCredit[0]);
     return res
       .status(200)
       .json({ message: 'chrage complete', data: walletNewCredit[0].credit });
