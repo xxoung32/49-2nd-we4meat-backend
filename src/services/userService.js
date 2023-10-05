@@ -30,7 +30,7 @@ const createUserService = async (
 
 const dupliCheckEmailService = async (email, next) => {
   try {
-    dupliCheckEmailDao(email);
+    return dupliCheckEmailDao(email);
   } catch (err) {
     console.error(err);
     next(err);
@@ -39,7 +39,7 @@ const dupliCheckEmailService = async (email, next) => {
 
 const dupliCheckPhoneService = async (phoneNumber, next) => {
   try {
-    dupliCheckPhoneDao(phoneNumber);
+    return dupliCheckPhoneDao(phoneNumber);
   } catch (err) {
     console.error(err);
     next(err);

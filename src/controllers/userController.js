@@ -11,6 +11,7 @@ const {
   setNewPasswordService,
   loginService,
   dupliCheckEmailService,
+  dupliCheckPhoneService
 } = userService;
 
 const signUpController = async (req, res) => {
@@ -51,6 +52,7 @@ const dupliCheckController = async (req, res) => {
     const { email, phoneNumber } = req.body;
     if (email) {
       const check = await dupliCheckEmailService(email);
+      console.log(check)
       if (check > 0) {
         return res.status(400).json({ message: 'EMAIL_IN_USE' });
       } else {

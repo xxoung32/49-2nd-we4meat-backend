@@ -1,6 +1,7 @@
 const {
   createUserService,
   dupliCheckEmailService,
+  dupliCheckPhoneService,
   getVerificationCodeService,
   setNewPasswordService,
   loginService,
@@ -44,6 +45,7 @@ module.exports = {
   userService: {
     createUserService,
     dupliCheckEmailService,
+    dupliCheckPhoneService,
     getVerificationCodeService,
     setNewPasswordService,
     loginService,

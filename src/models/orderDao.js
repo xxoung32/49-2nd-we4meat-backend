@@ -111,6 +111,7 @@ const getOrderListDao = async (userId) => {
       o.id AS orderId,
       JSON_ARRAYAGG(
         JSON_OBJECT(
+          'productId', p.id,
           'productName', p.product_name,
           'quantity', oi.quantity,
           'price', p.price,
@@ -120,8 +121,9 @@ const getOrderListDao = async (userId) => {
       o.created_at AS orderDate
     FROM orders o
     JOIN order_items oi ON oi.order_id = o.id
-    JOIN products p on oi.product_id = p.id
-    WHERE o.customer_id = ?
+    JOIN products p ON oi.product_id = p.id
+    JOIN carts ON carts.product_id = p.id
+    WHERE o.customer_id = ? AND carts.status = 1
     GROUP BY oi.order_id
     `,
     [userId],
