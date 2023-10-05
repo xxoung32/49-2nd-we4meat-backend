@@ -7,8 +7,6 @@ const {
   getWalletBalanceService,
 } = paymentService;
 
-// 1. 쿼리스트링에 있는 오더 넘버를 확인하여 쿼리문으로  오더 정보 가져오기..
-// 2. 오더 주문 가져온 후 user_id와 토큰값 확인하여 사용자가 맞는지 확인
 const checkAmountController = async (req, res, next) => {
   try {
     const { id } = req.user;
@@ -33,7 +31,8 @@ const checkAmountController = async (req, res, next) => {
 const walletDeductionController = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const itemPayment = await walletDeductionService(id);
+    const { orderId } = req.body
+    const itemPayment = await walletDeductionService(id, orderId);
     return res.status(200).json({
       message: 'paymentComplete',
       'total_Credit': itemPayment[0].credit,

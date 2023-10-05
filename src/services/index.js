@@ -33,6 +33,13 @@ const {
 
 const { getOrderAddressService } = require('./addressService');
 
+const {
+  walletRechargeService,
+  walletDeductionService,
+  getOrderlistService,
+  getWalletBalanceService,
+} = require('./paymentService')
+
 module.exports = {
   userService: {
     createUserService,
@@ -65,4 +72,10 @@ module.exports = {
   addressService: {
     getOrderAddressService,
   },
+  paymentService: {
+    walletRechargeService,
+    walletDeductionService,
+    getOrderlistService,
+    getWalletBalanceService,
+  }
 };
