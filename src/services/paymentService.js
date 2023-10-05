@@ -33,9 +33,10 @@ const walletDeductionService = async (customerId) => {
   const currentCredit = await getWalletBalanceDao(customerId);
   const orderAmount = await getOrderAmountDao(customerId);
   const newCredit = currentCredit[0].credit - orderAmount[0].total_amount;
-  const chargewallet = await getWalletBalanceDao(newCredit, customerId);
+  const chargewallet = await walletUpdateDao(newCredit, customerId);
+  const checkBalance = await getWalletBalanceDao(customerId);
   // const payStatusChange = await payStatusChangeDao(orderId);
-  return getWalletBalanceDao(customerId);
+  return await getWalletBalanceDao(customerId);
 };
 
 module.exports = {
