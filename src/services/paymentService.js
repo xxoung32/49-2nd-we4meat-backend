@@ -1,5 +1,10 @@
 const { paymentDao } = require('../models');
-const { getWalletBalanceDao, walletUpdateDao, getOrderAmountDao //payStatusChangeDao } = paymentDao;
+const {
+  getWalletBalanceDao,
+  walletUpdateDao,
+  getOrderAmountDao,
+  payStatusChangeDao,
+} = paymentDao;
 const { paymentController } = require('../controllers');
 
 // 주문금액 불러오기
@@ -28,8 +33,9 @@ const walletDeductionService = async (customerId) => {
   const currentCredit = await getWalletBalanceDao(customerId);
   const orderAmount = await getOrderAmountDao(customerId);
   const newCredit = currentCredit[0].credit - orderAmount[0].total_amount;
-  //const payStatusChange = await payStatusChangeDao(orderId);
-  return walletUpdateDao(newCredit, customerId);
+  const chargewallet = await getWalletBalanceDao(newCredit, customerId);
+  // const payStatusChange = await payStatusChangeDao(orderId);
+  return getWalletBalanceDao(customerId);
 };
 
 module.exports = {

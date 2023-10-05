@@ -92,9 +92,4 @@ module.exports = {
     walletUpdateDao,
     getOrderAmountDao,
   },
-  paymentDao: {
-    getWalletBalanceDao,
-    walletUpdateDao,
-    getOrderAmountDao,
-  },
 };

@@ -13,7 +13,6 @@ router.use('/users', userRouter);
 router.use('/order', orderRouter);
 router.use('/list', productRouter);
 router.use('/payment', paymentRouter);
-router.use('/topupcredit', paymentRouter);
 router.use('/review', reviewRouter);
 router.use('/cart', cartRouter);
 router.use('/address', addressRouter);

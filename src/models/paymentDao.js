@@ -11,20 +11,11 @@ const getWalletBalanceDao = async (customerId) => {
 const getOrderAmountDao = async (customerId) => {
   const checkTotalAmount = await dataSource.query(
     `
-    SELECT total_amount FROM orders WHERE customer_id = ?;`,
+    SELECT total_amount FROM orders WHERE payStatus = '1' AND customer_id = ?;`,
     [customerId],
   );
   return checkTotalAmount;
 };
-
-// const getOrderAmountDao = async (customerId) => {
-//   const checkTotalAmount = await dataSource.query(
-//     `
-//     SELECT total_amount FROM orders WHERE payStatus = '1' AND customer_id = ?;`,
-//     [customerId],
-//   );
-//   return checkTotalAmount;
-// };
 
 const walletUpdateDao = async (newCredit, customerId) => {
   const customer_wallet = await dataSource.query(
@@ -34,18 +25,17 @@ const walletUpdateDao = async (newCredit, customerId) => {
   return customer_wallet;
 };
 
-// 오더상태 변경 Dao 아직 구현 못함
-// const payStatusChangeDao = async (orderId) => {
-//   const orderstatus_change = await dataSource.query(
-//     `UPDATE orders SET payStatus = '2' WHERE id = ?`,
-//     [orderId],
-//   );
-//   return orderstatus_change
-// };
+const payStatusChangeDao = async (orderId) => {
+  const orderstatus_change = await dataSource.query(
+    `UPDATE orders SET payStatus = '2' WHERE id = ?`,
+    [orderId],
+  );
+  return orderstatus_change;
+};
 
 module.exports = {
   getWalletBalanceDao,
   walletUpdateDao,
   getOrderAmountDao,
-  //payStatusChangeDao
+  payStatusChangeDao,
 };

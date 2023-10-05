@@ -34,7 +34,10 @@ const walletDeductionController = async (req, res, next) => {
   try {
     const { id } = req.user;
     const itemPayment = await walletDeductionService(id);
-    return res.status(200).json({ message: 'Complete payment' });
+    return res.status(200).json({
+      message: 'payment Complete',
+      'total credit': itemPayment[0].credit,
+    });
   } catch (err) {
     console.log(err);
     next(err);
@@ -46,13 +49,12 @@ const walletRechargeController = async (req, res, next) => {
     const { id } = req.user;
     const chargeAmount = req.body.credit;
     const walletNewCredit = await walletRechargeService(chargeAmount, id);
-    if (!chargeAmount) {
-      throwError(400, 'NOT FOUND');
-    }
-    if (!walletNewCredit) {
-      throwError(400, 'Charging errors');
-    }
-    return res.status(200).json({ 'Total amount': walletNewCredit[0].credit });
+    if (!chargeAmount) throwError(400, 'NOT FOUND');
+    if (!walletNewCredit) throwError(400, 'Charging errors');
+    console.log('이건 왜 안돼', walletNewCredit[0]);
+    return res
+      .status(200)
+      .json({ message: 'chrage complete', data: walletNewCredit[0].credit });
   } catch (err) {
     console.log(err);
     next(err);
