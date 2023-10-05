@@ -11,7 +11,7 @@ const getWalletBalanceDao = async (customerId) => {
 const getOrderAmountDao = async (customerId) => {
   const checkTotalAmount = await dataSource.query(
     `
-    SELECT total_amount FROM orders WHERE payStatus = '1' AND customer_id = ?;`,
+    SELECT total_amount FROM orders WHERE pay_Status = '1' AND customer_id = ?;`,
     [customerId],
   );
   return checkTotalAmount;
@@ -27,7 +27,7 @@ const walletUpdateDao = async (newCredit, customerId) => {
 
 const payStatusChangeDao = async (orderId) => {
   const orderstatus_change = await dataSource.query(
-    `UPDATE orders SET payStatus = '2' WHERE id = ?`,
+    `UPDATE orders SET pay_Status = '2' WHERE id = ?`,
     [orderId],
   );
   return orderstatus_change;

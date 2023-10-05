@@ -15,14 +15,14 @@ const checkAmountController = async (req, res, next) => {
     const orderAmount = await getOrderlistService(id);
     const walletCredit = await getWalletBalanceService(id);
     if (!walletCredit[0].credit) {
-      throwError(400, 'Wallet not found');
+      throwError(400, 'NOT_FOUND_WALLET');
     } else if (walletCredit[0].credit < orderAmount[0].total_amount) {
-      throwError(400, 'Insufficient balance');
+      throwError(400, 'INSUFFICIENT_BALANCE');
     }
     return res.status(200).json({
       message: 'Payments available',
-      'Reserve balance': walletCredit[0].credit,
-      'Order Amount': orderAmount[0].total_amount,
+      'Reserve_balance': walletCredit[0].credit,
+      'Order_Amount': orderAmount[0].total_amount,
     });
   } catch (err) {
     console.log(err);
@@ -35,8 +35,8 @@ const walletDeductionController = async (req, res, next) => {
     const { id } = req.user;
     const itemPayment = await walletDeductionService(id);
     return res.status(200).json({
-      message: 'payment Complete',
-      'total credit': itemPayment[0].credit,
+      message: 'paymentComplete',
+      'total_Credit': itemPayment[0].credit,
     });
   } catch (err) {
     console.log(err);
@@ -49,12 +49,13 @@ const walletRechargeController = async (req, res, next) => {
     const { id } = req.user;
     const chargeAmount = req.body.credit;
     const walletNewCredit = await walletRechargeService(chargeAmount, id);
-    if (!chargeAmount) throwError(400, 'NOT FOUND');
-    if (!walletNewCredit) throwError(400, 'Charging errors');
-    console.log('이건 왜 안돼', walletNewCredit[0]);
-    return res
-      .status(200)
-      .json({ message: 'chrage complete', data: walletNewCredit[0].credit });
+    if (!chargeAmount) throwError(400, 'NO_AMOUNT');
+    if (!walletNewCredit) throwError(400, 'INTERNAL_ERROR');
+    // console.log('이건 왜 안돼', walletNewCredit[0]);
+    return res.status(200).json({
+      message: 'WALLET_CHARGED',
+      data: walletNewCredit[0].credit,
+    });
   } catch (err) {
     console.log(err);
     next(err);
