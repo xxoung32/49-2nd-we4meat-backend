@@ -35,7 +35,7 @@ CREATE TABLE `carts` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `carts` (
 
 LOCK TABLES `carts` WRITE;
 /*!40000 ALTER TABLE `carts` DISABLE KEYS */;
+INSERT INTO `carts` VALUES (123,1,1,5,2,'2023-10-04 21:32:58','2023-10-04 21:36:39'),(124,1,3,7,2,'2023-10-04 21:32:58','2023-10-04 21:36:39'),(125,1,2,8,2,'2023-10-04 21:32:58','2023-10-04 21:36:39');
 /*!40000 ALTER TABLE `carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,9 +148,7 @@ CREATE TABLE `customers` (
   `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `email_2` (`email`),
-  UNIQUE KEY `phonenumber` (`phonenumber`),
-  UNIQUE KEY `phonenumber_2` (`phonenumber`)
+  UNIQUE KEY `phonenumber` (`phonenumber`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -172,14 +171,20 @@ DROP TABLE IF EXISTS `order_items`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_items` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `customer_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `customer_id` (`customer_id`),
   KEY `product_id` (`product_id`),
-  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,6 +193,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+INSERT INTO `order_items` VALUES (31,9,1,1,5,'2023-10-04 21:36:39',NULL),(32,9,1,3,7,'2023-10-04 21:36:39',NULL),(33,9,1,2,8,'2023-10-04 21:36:39',NULL);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,18 +233,17 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int NOT NULL,
-  `order_item_id` int NOT NULL,
   `total_amount` int NOT NULL,
   `requested_date` date DEFAULT NULL,
   `shipping_message` varchar(40) DEFAULT NULL,
+  `order_status` varchar(40) DEFAULT NULL,
+  `pay_status` varchar(40) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `modified_at` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
-  KEY `order_item_id` (`order_item_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,6 +252,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (9,1,10000,NULL,NULL,NULL,NULL,'2023-10-04 21:36:39',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +382,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (1,1,1,'삽겹살은 맛있다','진짜 진짜 맛있어요, 둘이 먹다 둘이 죽어도 모를 맛!',NULL,'2023-10-03 10:46:56',NULL),(2,1,2,'한우 투뿔인가?','당일도축 고기를 즐길 수 있어서 너무 좋아요.',NULL,'2023-10-03 11:21:43',NULL),(3,1,2,'한우 1+++?','지금까지 이런 한우는 없었다. 이것은 투쁠인가 쓰리플인가?',NULL,'2023-10-03 11:59:53',NULL),(4,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-03 12:02:47',NULL);
+INSERT INTO `reviews` VALUES (1,1,1,'삽겹살은 맛있다','진짜 진짜 맛있어요, 둘이 먹다 둘이 죽어도 모를 맛!',NULL,'2023-10-03 10:46:56',NULL),(3,1,2,'한우 1+++? ','지금까지 이런 한우는 없었다. 이것은 투쁠인가 트리플인가?',NULL,'2023-10-03 11:59:53','2023-10-03 12:59:56'),(4,1,3,'이게 당일 도축 생닭?','수정4: 지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-03 12:02:47','2023-10-03 12:58:59');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,4 +418,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-03 21:03:55
+-- Dump completed on 2023-10-05  8:09:38
