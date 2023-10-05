@@ -29,13 +29,13 @@ const walletRechargeService = async (chargeAmount, customerId) => {
 
 //  차감
 
-const walletDeductionService = async (customerId, orderId) => {
+const walletDeductionService = async (customerId) => {
   const currentCredit = await getWalletBalanceDao(customerId);
   const orderAmount = await getOrderAmountDao(customerId);
   const newCredit = currentCredit[0].credit - orderAmount[0].total_amount;
   const chargewallet = await walletUpdateDao(newCredit, customerId);
   const checkBalance = await getWalletBalanceDao(customerId);
-  const payStatusChange = await payStatusChangeDao(orderId);
+  // const payStatusChange = await payStatusChangeDao(orderId);
   return await getWalletBalanceDao(customerId);
 };
 
