@@ -20,13 +20,14 @@ const {
   getCartController,
   updateCartController,
 } = require('./cartController');
-
 const {
-  checkAmountController,
-  walletDeductionController,
-  walletRechargeController,
-  chargeAmount,
-} = require('./paymentController');
+  createOrderController,
+  getOrderListController,
+  getOrderDetailController,
+  cancelOrdersController,
+} = require('./orderController');
+
+const { getAddressController } = require('./addressController');
 
 module.exports = {
   userController: {

@@ -9,7 +9,7 @@ const {
 // 장바구니 아이템 (제품) 추가 - 완
 const addItemController = async (req, res) => {
   try {
-    const customerId = req.user.id;
+    const customerId = req.user.id; // 
     const { productId, quantity } = req.body;
     if (!customerId) throwError(400, 'KEY_ERROR_UID');
     if (!productId) throwError(400, 'KEY_ERROR_PID');
@@ -39,13 +39,12 @@ const getCartController = async (req, res, next) => {
   }
 };
 
-// 장바구니 업데이트
+// 장바구니 업데이트 - 완
 const updateCartController = async (req, res, next) => {
   try {
-    const customerId = req.user.id;
+    const customerId = req.user.id; 
     const products = req.body.products;
     if (!customerId || !products) throwError(400, 'KEY_ERROR');
-    //Business logic
     return res.status(201).json({
       message: 'CART_UPDATED',
       data: await updateCartService(customerId, products),
@@ -53,7 +52,6 @@ const updateCartController = async (req, res, next) => {
   } catch (err) {
     console.error(err);
     next(err);
-    // return res.status(error.statusCode || 400).json({ message: error.message });
   }
 };
 

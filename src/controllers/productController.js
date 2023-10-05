@@ -5,7 +5,6 @@ const { listProductsService, productDetailService } = productService;
 const listProductController = async (req, res, next) => {
   try {
     if (req?.query.category == null) throwError(400, 'NO_CATEGORIES');
-    console.log(req.query.category);
     categoryName = req.query.category;
     return res.status(200).json({
       message: 'QUERY_SUCCESSFUL',
@@ -20,7 +19,6 @@ const listProductController = async (req, res, next) => {
 const productDetailController = async (req, res, next) => {
   try {
     if (req?.query.productId == null) throwError(400, 'NO_PRODUCT');
-    console.log(req.query.productId);
     productId = req.query.productId;
     return res.status(200).json({
         message: 'QUERY_SUCCESSFUL',

@@ -1,3 +1,5 @@
+const enums = require('./enums');
+
 const {
   getVerificationCodeDao,
   setNewPasswordDao,
@@ -16,7 +18,28 @@ const {
   deleteReviewDao,
 } = require('./reviewDao');
 
-const { updateItemDao, getCartDao, purgeCartDao } = require('./cartDao');
+const {
+  updateItemDao,
+  getCartDao,
+  purgeCartDao,
+  existingItemCheckDao,
+  updateQuantityDao,
+} = require('./cartDao');
+
+const {
+  customerCartDao,
+  MoveCartToOrderDao,
+  getOrderListDao,
+  getOrderDetailDao,
+  checkOrderStatusDao,
+  cancelOrdersDao,
+} = require('./orderDao');
+
+const {
+  postOrderAddressDao,
+  customerAddressDao,
+  getAddressDao,
+} = require('./addressDao');
 
 const {
   getWalletBalanceDao,
@@ -25,6 +48,7 @@ const {
 } = require('./paymentDao');
 
 module.exports = {
+  enums,
   userDao: {
     getVerificationCodeDao,
     setNewPasswordDao,
@@ -47,6 +71,26 @@ module.exports = {
     updateItemDao,
     getCartDao,
     purgeCartDao,
+    existingItemCheckDao,
+    updateQuantityDao,
+  },
+  orderDao: {
+    customerCartDao,
+    MoveCartToOrderDao,
+    getOrderListDao,
+    getOrderDetailDao,
+    checkOrderStatusDao,
+    cancelOrdersDao,
+  },
+  addressDao: {
+    postOrderAddressDao,
+    customerAddressDao,
+    getAddressDao,
+  },
+  paymentDao: {
+    getWalletBalanceDao,
+    walletUpdateDao,
+    getOrderAmountDao,
   },
   paymentDao: {
     getWalletBalanceDao,
