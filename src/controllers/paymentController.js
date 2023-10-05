@@ -33,10 +33,10 @@ const checkAmountController = async (req, res, next) => {
 const walletDeductionController = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const itemPayment = await walletDeductionService(id);
+    const walletBalance = await walletDeductionService(id);
     return res.status(200).json({
       message: 'paymentComplete',
-      'total_Credit': itemPayment[0].credit,
+      'totalCredit': walletBalance[0].credit,
     });
   } catch (err) {
     console.log(err);
