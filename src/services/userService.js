@@ -6,6 +6,7 @@ const {
   dupliCheckEmailDao,
   dupliCheckPhoneDao,
   loginEmailCheckDao,
+  getUserInfoDao,
 } = userDao;
 
 const createUserService = async (
@@ -60,6 +61,10 @@ const setNewPasswordService = (id, password) => {
   return 'password updated';
 };
 
+const getUserInfoService = async (id) => {
+  return await getUserInfoDao(id);
+};
+
 module.exports = {  
   createUserService,
   dupliCheckEmailService,
@@ -67,4 +72,5 @@ module.exports = {
   getVerificationCodeService,
   setNewPasswordService,
   loginService,
+  getUserInfoService,
 };

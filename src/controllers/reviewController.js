@@ -4,11 +4,12 @@ const { getReviewService, createReviewService, updateReviewService, deleteReview
 
 const getReviewController = async (req, res, next) => {
     try {
+        const userId  = req.user.id;
         const productId = req.query.tab;
         if (!productId) throwError(400, 'NO_PRODUCT_ID');
         return res.status(200).json({
             message: 'REVIEW_CALLED',
-            data: await getReviewService(productId),
+            data: await getReviewService(userId, productId),
           });
     } catch (err) {
         console.error(err);

@@ -7,11 +7,16 @@ const {
   getWalletBalanceService,
 } = paymentService;
 
+const getAmountController = async (req, res,next) => {
+    const userId = req.user.id;
+    return await getWalletBalanceService(userId);
+};
+
 const checkAmountController = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    const orderAmount = await getOrderlistService(id);
-    const walletCredit = await getWalletBalanceService(id);
+    const userId = req.user.id;
+    const orderAmount = await getOrderlistService(userId);
+    const walletCredit = await getWalletBalanceService(userId);
     if (!walletCredit[0].credit) {
       throwError(400, 'NOT_FOUND_WALLET');
     } else if (walletCredit[0].credit < orderAmount[0].total_amount) {
@@ -30,9 +35,9 @@ const checkAmountController = async (req, res, next) => {
 
 const walletDeductionController = async (req, res, next) => {
   try {
-    const { id } = req.user;
+    const userId = req.user.id;
     const { orderId } = req.body
-    const itemPayment = await walletDeductionService(id, orderId);
+    const itemPayment = await walletDeductionService(userId, orderId);
     return res.status(200).json({
       message: 'paymentComplete',
       'total_Credit': itemPayment[0].credit,
@@ -63,6 +68,7 @@ const walletRechargeController = async (req, res, next) => {
 // 오더상태 변경
 
 module.exports = {
+  getAmountController,
   checkAmountController,
   walletDeductionController,
   walletRechargeController,

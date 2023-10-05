@@ -5,6 +5,7 @@ const {
   getVerificationCodeService,
   setNewPasswordService,
   loginService,
+  getUserInfoService,
 } = require('./userService');
 
 const {
@@ -49,6 +50,7 @@ module.exports = {
     getVerificationCodeService,
     setNewPasswordService,
     loginService,
+    getUserInfoService,
   },
   productService: {
     listProductsService,

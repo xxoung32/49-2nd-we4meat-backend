@@ -1,11 +1,11 @@
 const { dataSource } = require('./dataSource');
 
-const getReviewDao = async (productId) => {
+const getReviewDao = async (userId, productId) => {
   return await dataSource.query(
     `
-    SELECT * FROM reviews WHERE product_id = ?
+    SELECT * FROM reviews WHERE customer_id = ? AND product_id = ?
     `,
-    [productId],
+    [userId, productId],
   );
 };
 

@@ -7,6 +7,7 @@ const {
   createUserDao,
   dupliCheckEmailDao,
   dupliCheckPhoneDao,
+  getUserInfoDao,
 } = require('./userDao');
 
 const { listProductsDao, productDetailDao } = require('./productDao');
@@ -57,6 +58,7 @@ module.exports = {
     createUserDao,
     dupliCheckEmailDao,
     dupliCheckPhoneDao,
+    getUserInfoDao,
   },
   productDao: {
     listProductsDao,

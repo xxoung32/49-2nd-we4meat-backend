@@ -35,7 +35,7 @@ CREATE TABLE `carts` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `carts` (
 
 LOCK TABLES `carts` WRITE;
 /*!40000 ALTER TABLE `carts` DISABLE KEYS */;
-INSERT INTO `carts` VALUES (130,1,1,6381,1,'2023-10-05 10:09:38','2023-10-05 17:37:34'),(131,1,3,7,1,'2023-10-05 10:09:38',NULL),(132,1,2,8,1,'2023-10-05 10:09:38',NULL),(133,17,1,7,1,'2023-10-05 16:07:32',NULL);
+INSERT INTO `carts` VALUES (133,17,1,7,1,'2023-10-05 16:07:32',NULL),(142,1,1,3,1,'2023-10-05 19:11:23',NULL);
 /*!40000 ALTER TABLE `carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `customer_wallets` (
 
 LOCK TABLES `customer_wallets` WRITE;
 /*!40000 ALTER TABLE `customer_wallets` DISABLE KEYS */;
-INSERT INTO `customer_wallets` VALUES (1,1,19000,'2023-10-05 05:09:10','2023-10-05 09:14:34'),(2,11,0,'2023-10-05 05:33:27','2023-10-05 05:47:24'),(3,12,0,'2023-10-05 05:49:03',NULL);
+INSERT INTO `customer_wallets` VALUES (1,1,449000,'2023-10-05 05:09:10','2023-10-05 19:33:06'),(2,11,0,'2023-10-05 05:33:27','2023-10-05 05:47:24'),(3,12,0,'2023-10-05 05:49:03',NULL);
 /*!40000 ALTER TABLE `customer_wallets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +185,7 @@ CREATE TABLE `order_items` (
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +194,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` VALUES (31,9,1,1,5,'2023-10-04 21:36:39',NULL),(32,9,1,3,7,'2023-10-04 21:36:39',NULL),(33,9,1,2,8,'2023-10-04 21:36:39',NULL),(34,9,1,1,5,'2023-10-05 08:58:05',NULL),(35,9,1,3,7,'2023-10-05 08:58:05',NULL),(36,9,1,2,8,'2023-10-05 08:58:05',NULL);
+INSERT INTO `order_items` VALUES (31,9,1,1,5,'2023-10-04 21:36:39',NULL),(32,9,1,3,7,'2023-10-04 21:36:39',NULL),(33,9,1,2,8,'2023-10-04 21:36:39',NULL),(37,9,1,4,4,'2023-10-05 19:10:57',NULL),(38,9,1,3,2,'2023-10-05 19:10:57',NULL),(39,9,1,1,12,'2023-10-05 19:10:57',NULL);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +244,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,7 +253,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (9,1,10000,NULL,NULL,NULL,'2','2023-10-04 21:36:39','2023-10-05 09:00:06'),(10,1,10000,NULL,NULL,NULL,'2','2023-10-05 08:58:05','2023-10-05 09:14:34');
+INSERT INTO `orders` VALUES (9,1,10000,NULL,NULL,NULL,'2','2023-10-04 21:36:39','2023-10-05 09:00:06'),(11,1,228000,NULL,NULL,NULL,NULL,'2023-10-05 19:10:57',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,6 +363,7 @@ DROP TABLE IF EXISTS `reviews`;
 CREATE TABLE `reviews` (
   `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int NOT NULL,
+  `product_id` int NOT NULL,
   `title` varchar(50) NOT NULL,
   `body` text NOT NULL,
   `imgUrl` text,
@@ -370,8 +371,10 @@ CREATE TABLE `reviews` (
   `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
-  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -380,7 +383,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (1,1,'삽겹살은 맛있다','진짜 진짜 맛있어요, 둘이 먹다 둘이 죽어도 모를 맛!',NULL,'2023-10-03 10:46:56',NULL),(3,1,'한우 1+++? ','지금까지 이런 한우는 없었다. 이것은 투쁠인가 트리플인가?',NULL,'2023-10-03 11:59:53','2023-10-03 12:59:56'),(4,1,'이게 당일 도축 생닭?','수정4: 지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-03 12:02:47','2023-10-03 12:58:59'),(5,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 08:55:48',NULL),(7,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:28',NULL),(8,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:33',NULL),(9,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:56',NULL),(10,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:57',NULL),(11,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:58',NULL),(12,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:59',NULL),(13,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:59',NULL),(14,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:11:00',NULL),(15,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:11:00',NULL),(16,1,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:11:01',NULL);
+INSERT INTO `reviews` VALUES (1,1,1,'삽겹살은 맛있다','진짜 진짜 맛있어요, 둘이 먹다 둘이 죽어도 모를 맛!',NULL,'2023-10-03 10:46:56',NULL),(3,1,2,'한우 1+++? ','지금까지 이런 한우는 없었다. 이것은 투쁠인가 트리플인가?',NULL,'2023-10-03 11:59:53','2023-10-03 12:59:56'),(4,1,3,'이게 당일 도축 생닭?','수정4: 지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-03 12:02:47','2023-10-03 12:58:59'),(5,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 08:55:48',NULL),(7,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:28',NULL),(8,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:33',NULL),(9,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:56',NULL),(10,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:57',NULL),(11,1,3,'이게 당일 도축 생닭?','지금까지 치킨도 없었다, 이것은 갈비인가 치킨인가, 여기는 정!육!각!',NULL,'2023-10-05 12:10:58',NULL);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,4 +419,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-06  2:50:17
+-- Dump completed on 2023-10-06  4:54:38

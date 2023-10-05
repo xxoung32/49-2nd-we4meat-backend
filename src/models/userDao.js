@@ -61,6 +61,18 @@ const dupliCheckPhoneDao = async (phonenumber) => {
   return checkVal.length;
 };
 
+const getUserInfoDao = async (userId) => {
+  return await dataSource.query(
+    `SELECT
+      c.name,
+      c.phonenumber AS phoneNumber,
+      c.address,
+      cw.credit AS credit
+    FROM customers c
+    JOIN customer_wallets cw ON c.id = cw.customer_id
+    WHERE c.id = ?`, [userId],);
+};
+
 module.exports = {
   getVerificationCodeDao,
   setNewPasswordDao,
@@ -68,4 +80,5 @@ module.exports = {
   createUserDao,
   dupliCheckEmailDao,
   dupliCheckPhoneDao,
+  getUserInfoDao,
 };

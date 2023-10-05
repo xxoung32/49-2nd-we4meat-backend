@@ -11,7 +11,8 @@ const {
   setNewPasswordService,
   loginService,
   dupliCheckEmailService,
-  dupliCheckPhoneService
+  dupliCheckPhoneService,
+  getUserInfoService
 } = userService;
 
 const signUpController = async (req, res) => {
@@ -158,10 +159,25 @@ const setNewPasswordController = async (req, res, next) => {
   }
 };
 
+const getUserInfoController = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    if (!userId) throwError(400, "KEY_ERROR");
+    return res.status(200).json({
+      message: "USER_INFO_LOADED",
+      data : await getUserInfoService(userId),
+    })
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+}
+
 module.exports = {
   signUpController,
   loginController,
   getVerificationCodeController,
   setNewPasswordController,
   dupliCheckController,
+  getUserInfoController
 };
