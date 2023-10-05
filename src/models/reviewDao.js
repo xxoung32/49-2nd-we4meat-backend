@@ -9,12 +9,12 @@ const getReviewDao = async (productId) => {
   );
 };
 
-const createReviewDao = async (userId, productId, title, body, imgUrl) => {
+const createReviewDao = async (userId, title, body, imgUrl) => {
   return await dataSource.query(
     `
-    INSERT INTO reviews (customer_id, product_id, title, body, imgUrl) VALUES (?, ?, ?, ?, ?)
+    INSERT INTO reviews (customer_id, title, body, imgUrl) VALUES (?, ?, ?, ?)
     `,
-    [userId, productId, title, body, imgUrl],
+    [userId, title, body, imgUrl],
   );
 };
 

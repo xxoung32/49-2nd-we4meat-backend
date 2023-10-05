@@ -134,19 +134,31 @@ const getOrderListDao = async (userId) => {
 const getOrderDetailDao = async (userId, orderId) => {
   return await dataSource.query(
     `
-        SELECT customers.id,
-        customers.email,
-        customers.name,
-        customers.phonenumber,
-        customers.address,
-        customer_address.customer_id,
-        orders.id AS orderId
-        FROM customers
-        LEFT JOIN customer_address ON
-        customers.id = customer_address.customer_id
-        LEFT JOIN orders on customers.id = orders.customer_id
-        WHERE customers.id = ? & orders.id = ?;
-        `,
+      SELECT
+        c.email AS userEmail,
+        c.name AS name,
+        c.phonenumber AS PhoneNumber,
+        c.address AS address,
+        o.id AS orderId,
+        o.requested_date AS requestDate,
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'productId', p.id,
+            'productName', p.product_name,
+            'quantity', oi.quantity,
+            'price', p.price,
+            'totalPrice', (oi.quantity * p.price)
+          )
+        ) AS orderItems
+      FROM orders o
+      JOIN customers c ON o.customer_id = c.id
+      JOIN order_items oi ON oi.order_id = o.id
+      JOIN products p ON p.id = oi.product_id
+      WHERE
+        c.id = ? AND o.id = ?
+      GROUP BY
+        oi.order_id
+    `,
     [userId, orderId],
   );
 };
