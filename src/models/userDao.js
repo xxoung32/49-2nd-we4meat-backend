@@ -52,7 +52,7 @@ const createUserDao = async (name, email, password, phoneNumber) => {
     );
 
     await dataSource.query(
-      `INSERT INTO customer_wallets (customer_id) VALUES (?)
+      `INSERT INTO customer_wallets (customer_id, credit) VALUES (?, 0)
   `,
       [userInfo[0].id],
     );

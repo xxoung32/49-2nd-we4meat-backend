@@ -48,6 +48,7 @@ const walletRechargeController = async (req, res, next) => {
   try {
     const { id } = req.user;
     const chargeAmount = req.body.credit;
+    console.log("얼마 충전하고 싶니?", chargeAmount)
     const walletNewCredit = await walletRechargeService(chargeAmount, id);
     if (!chargeAmount) throwError(400, 'NO_AMOUNT');
     if (!walletNewCredit) throwError(400, 'INTERNAL_ERROR');
