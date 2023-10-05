@@ -9,7 +9,7 @@ const {
 // 장바구니 아이템 (제품) 추가 - 완
 const addItemController = async (req, res) => {
   try {
-    const customerId = req.user.id; // 
+    const customerId = req.user.id;
     const { productId, quantity } = req.body;
     if (!customerId) throwError(400, 'KEY_ERROR_UID');
     if (!productId) throwError(400, 'KEY_ERROR_PID');
