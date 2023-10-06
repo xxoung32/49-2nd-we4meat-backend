@@ -62,8 +62,11 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
           customerCart[baseNumber].quantity,
           // orderStatusEnum.ADDED,
         ],
+        
       );
     }
+
+
 
     // Soft Delete
     const deleteCarts = await queryRunner.query(
@@ -75,7 +78,7 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
       [userId],
     );
     await queryRunner.commitTransaction();
-    return deleteCarts;
+    return deleteCarts, orderId;
   } catch (err) {
     console.error(err);
     await queryRunner.rollbackTransaction();

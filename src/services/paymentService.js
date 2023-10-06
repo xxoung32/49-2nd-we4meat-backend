@@ -29,7 +29,8 @@ const walletRechargeService = async (chargeAmount, customerId) => {
 const walletDeductionService = async (customerId, orderId) => {
   const currentCredit = await getWalletBalanceDao(customerId);
   const orderAmount = await getOrderAmountDao(customerId);
-  const newCredit = currentCredit[0].credit - orderAmount[0].total_amount;
+  console.log(orderAmount)
+  const newCredit = currentCredit[0].credit - orderAmount[0].total_amount - 3500;
   await walletUpdateDao(newCredit, customerId);
   await getWalletBalanceDao(customerId);
   await payStatusChangeDao(customerId, orderId);

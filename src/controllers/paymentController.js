@@ -7,9 +7,21 @@ const {
   getWalletBalanceService,
 } = paymentService;
 
-const getAmountController = async (req, res,next) => {
-    const userId = req.user.id;
-    return await getWalletBalanceService(userId);
+const getTotalAmountController = async (req, res, next) => {
+  const userId = req.user.id;
+  const orderAmount = await getOrderlistService(userId);
+  console.log(orderAmount);
+  return res
+    .status(200)
+    .json({
+      message: 'TotalOrderAmount_Called',
+      data: orderAmount[0].total_amount,
+    });
+};
+
+const getAmountController = async (req, res, next) => {
+  const userId = req.user.id;
+  return await getWalletBalanceService(userId);
 };
 
 const checkAmountController = async (req, res, next) => {
@@ -24,8 +36,8 @@ const checkAmountController = async (req, res, next) => {
     }
     return res.status(200).json({
       message: 'Payments available',
-      'Reserve_balance': walletCredit[0].credit,
-      'Order_Amount': orderAmount[0].total_amount,
+      Reserve_balance: walletCredit[0].credit,
+      Order_Amount: orderAmount[0].total_amount,
     });
   } catch (err) {
     console.log(err);
@@ -36,11 +48,11 @@ const checkAmountController = async (req, res, next) => {
 const walletDeductionController = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const { orderId } = req.body
+    const { orderId } = req.body;
     const itemPayment = await walletDeductionService(userId, orderId);
     return res.status(200).json({
       message: 'paymentComplete',
-      'total_Credit': itemPayment[0].credit,
+      total_Credit: itemPayment[0].credit,
     });
   } catch (err) {
     console.log(err);
@@ -68,6 +80,7 @@ const walletRechargeController = async (req, res, next) => {
 // 오더상태 변경
 
 module.exports = {
+  getTotalAmountController,
   getAmountController,
   checkAmountController,
   walletDeductionController,
