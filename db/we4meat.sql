@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.1.0, for macos13.3 (arm64)
 --
--- Host: localhost    Database: we4meat4
+-- Host: localhost    Database: we4meat
 -- ------------------------------------------------------
 -- Server version	8.1.0
 

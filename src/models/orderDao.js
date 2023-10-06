@@ -29,22 +29,23 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
     `,
       [userId],
     );
-
+    console.log(customerCart, "cusomterCART @ DAO");
     // Orders Table : Init & Total Price 에 값 넣어 주기
-    await dataSource.query(
+    const insertCart = await dataSource.query(
       `
       INSERT INTO orders (total_amount, customer_id)
       VALUES (?, ?)
       `,
       [totalPrice, userId],
     );
+    console.log(insertCart,"@DAO")
 
     const orderId = await dataSource.query(
       `
       SELECT id AS orderId FROM orders WHERE customer_id = ?
       `, [userId]
     );
-
+      console.log(orderId,"orderId @ DAO")
     // 불러온 장바구니 아이템을 orders 테이블에 넣어 주는 반복문
     for (var baseNumber = 0; baseNumber < customerCart.length; baseNumber++) {
       await queryRunner.query(
