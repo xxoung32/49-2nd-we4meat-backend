@@ -7,7 +7,7 @@ exports.verifyToken = (req, res, next) => {
   console.log(token);
   // 토큰 유무 확인
   if (!token) {
-    throwError(401, 'access token denied');
+    throwError(401, 'accessTokenDenied');
   }
 
   try {

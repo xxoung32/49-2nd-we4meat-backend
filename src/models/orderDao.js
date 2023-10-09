@@ -29,22 +29,23 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
     `,
       [userId],
     );
-
+    console.log(customerCart, "cusomterCART @ DAO");
     // Orders Table : Init & Total Price 에 값 넣어 주기
-    await dataSource.query(
+    const insertCart = await dataSource.query(
       `
       INSERT INTO orders (total_amount, customer_id)
       VALUES (?, ?)
       `,
       [totalPrice, userId],
     );
+    console.log(insertCart,"@DAO")
 
     const orderId = await dataSource.query(
       `
       SELECT id AS orderId FROM orders WHERE customer_id = ?
       `, [userId]
     );
-
+      console.log(orderId,"orderId @ DAO")
     // 불러온 장바구니 아이템을 orders 테이블에 넣어 주는 반복문
     for (var baseNumber = 0; baseNumber < customerCart.length; baseNumber++) {
       await queryRunner.query(
@@ -62,8 +63,11 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
           customerCart[baseNumber].quantity,
           // orderStatusEnum.ADDED,
         ],
+        
       );
     }
+
+
 
     // Soft Delete
     const deleteCarts = await queryRunner.query(
@@ -75,7 +79,7 @@ const MoveCartToOrderDao = async (userId, totalPrice) => {
       [userId],
     );
     await queryRunner.commitTransaction();
-    return deleteCarts;
+    return deleteCarts, orderId;
   } catch (err) {
     console.error(err);
     await queryRunner.rollbackTransaction();
@@ -111,6 +115,7 @@ const getOrderListDao = async (userId) => {
       o.id AS orderId,
       JSON_ARRAYAGG(
         JSON_OBJECT(
+          'productId', p.id,
           'productName', p.product_name,
           'quantity', oi.quantity,
           'price', p.price,
@@ -120,8 +125,9 @@ const getOrderListDao = async (userId) => {
       o.created_at AS orderDate
     FROM orders o
     JOIN order_items oi ON oi.order_id = o.id
-    JOIN products p on oi.product_id = p.id
-    WHERE o.customer_id = ?
+    JOIN products p ON oi.product_id = p.id
+    JOIN carts ON carts.product_id = p.id
+    WHERE o.customer_id = ? AND carts.status = 1
     GROUP BY oi.order_id
     `,
     [userId],
@@ -132,19 +138,31 @@ const getOrderListDao = async (userId) => {
 const getOrderDetailDao = async (userId, orderId) => {
   return await dataSource.query(
     `
-        SELECT customers.id,
-        customers.email,
-        customers.name,
-        customers.phonenumber,
-        customers.address,
-        customer_address.customer_id,
-        orders.id AS orderId
-        FROM customers
-        LEFT JOIN customer_address ON
-        customers.id = customer_address.customer_id
-        LEFT JOIN orders on customers.id = orders.customer_id
-        WHERE customers.id = ? & orders.id = ?;
-        `,
+      SELECT
+        c.email AS userEmail,
+        c.name AS name,
+        c.phonenumber AS PhoneNumber,
+        c.address AS address,
+        o.id AS orderId,
+        o.requested_date AS requestDate,
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'productId', p.id,
+            'productName', p.product_name,
+            'quantity', oi.quantity,
+            'price', p.price,
+            'totalPrice', (oi.quantity * p.price)
+          )
+        ) AS orderItems
+      FROM orders o
+      JOIN customers c ON o.customer_id = c.id
+      JOIN order_items oi ON oi.order_id = o.id
+      JOIN products p ON p.id = oi.product_id
+      WHERE
+        c.id = ? AND o.id = ?
+      GROUP BY
+        oi.order_id
+    `,
     [userId, orderId],
   );
 };

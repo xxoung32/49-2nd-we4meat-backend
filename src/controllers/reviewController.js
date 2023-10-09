@@ -4,11 +4,12 @@ const { getReviewService, createReviewService, updateReviewService, deleteReview
 
 const getReviewController = async (req, res, next) => {
     try {
+        const userId  = req.user.id;
         const productId = req.query.tab;
         if (!productId) throwError(400, 'NO_PRODUCT_ID');
         return res.status(200).json({
             message: 'REVIEW_CALLED',
-            data: await getReviewService(productId),
+            data: await getReviewService(userId, productId),
           });
     } catch (err) {
         console.error(err);
@@ -19,11 +20,11 @@ const getReviewController = async (req, res, next) => {
 const createReviewController = async (req, res, next) => {
     try {
         const userId  = req.user.id;
-        const { productId, title, body, imgUrl } = req.body;
-        if (!userId || !productId) throwError(400, "KEY_ERROR")
+        const {title, body, imgUrl } = req.body;
+        if (!userId) throwError(400, "KEY_ERROR")
         if (!body) throwError(400, 'NO_CONTENT');
         if (!title) throwError(400, "NO_TITLE");
-        return res.status(201).json(await createReviewService(userId, productId, title, body, imgUrl))
+        return res.status(201).json(await createReviewService(userId, title, body, imgUrl))
     } catch (err) {
         console.error(err);
         next(err);

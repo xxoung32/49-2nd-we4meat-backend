@@ -11,6 +11,8 @@ const {
   setNewPasswordService,
   loginService,
   dupliCheckEmailService,
+  dupliCheckPhoneService,
+  getUserInfoService
 } = userService;
 
 const signUpController = async (req, res) => {
@@ -51,6 +53,7 @@ const dupliCheckController = async (req, res) => {
     const { email, phoneNumber } = req.body;
     if (email) {
       const check = await dupliCheckEmailService(email);
+      console.log(check)
       if (check > 0) {
         return res.status(400).json({ message: 'EMAIL_IN_USE' });
       } else {
@@ -156,10 +159,25 @@ const setNewPasswordController = async (req, res, next) => {
   }
 };
 
+const getUserInfoController = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    if (!userId) throwError(400, "KEY_ERROR");
+    return res.status(200).json({
+      message: "USER_INFO_LOADED",
+      data : await getUserInfoService(userId),
+    })
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+}
+
 module.exports = {
   signUpController,
   loginController,
   getVerificationCodeController,
   setNewPasswordController,
   dupliCheckController,
+  getUserInfoController
 };

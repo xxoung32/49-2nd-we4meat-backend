@@ -4,6 +4,7 @@ const {
   setNewPasswordController,
   loginController,
   dupliCheckController,
+  getUserInfoController,
 } = require('./userController');
 const {
   listProductController,
@@ -26,14 +27,15 @@ const {
   getOrderDetailController,
   cancelOrdersController,
 } = require('./orderController');
-
-const { getAddressController } = require('./addressController');
-
 const {
+  getTotalAmountController,
+  getAmountController,
   checkAmountController,
   walletDeductionController,
   walletRechargeController,
-} = require('./paymentController');
+} = require('./paymentController')
+
+const { getAddressController } = require('./addressController');
 
 module.exports = {
   userController: {
@@ -42,6 +44,7 @@ module.exports = {
     setNewPasswordController,
     loginController,
     dupliCheckController,
+    getUserInfoController,
   },
   productController: {
     listProductController,
@@ -64,9 +67,14 @@ module.exports = {
     getOrderDetailController,
     cancelOrdersController,
   },
+  addressController: {
+    getAddressController,
+  },
   paymentController: {
+    getTotalAmountController,
+    getAmountController,
     checkAmountController,
     walletDeductionController,
     walletRechargeController,
-  },
+  }
 };

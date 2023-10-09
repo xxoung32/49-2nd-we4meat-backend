@@ -6,6 +6,7 @@ const {
   dupliCheckEmailDao,
   dupliCheckPhoneDao,
   loginEmailCheckDao,
+  getUserInfoDao,
 } = userDao;
 
 const createUserService = async (
@@ -30,7 +31,7 @@ const createUserService = async (
 
 const dupliCheckEmailService = async (email, next) => {
   try {
-    dupliCheckEmailDao(email);
+    return dupliCheckEmailDao(email);
   } catch (err) {
     console.error(err);
     next(err);
@@ -39,7 +40,7 @@ const dupliCheckEmailService = async (email, next) => {
 
 const dupliCheckPhoneService = async (phoneNumber, next) => {
   try {
-    dupliCheckPhoneDao(phoneNumber);
+    return dupliCheckPhoneDao(phoneNumber);
   } catch (err) {
     console.error(err);
     next(err);
@@ -60,6 +61,10 @@ const setNewPasswordService = (id, password) => {
   return 'password updated';
 };
 
+const getUserInfoService = async (id) => {
+  return await getUserInfoDao(id);
+};
+
 module.exports = {  
   createUserService,
   dupliCheckEmailService,
@@ -67,4 +72,5 @@ module.exports = {
   getVerificationCodeService,
   setNewPasswordService,
   loginService,
+  getUserInfoService,
 };

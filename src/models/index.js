@@ -7,6 +7,7 @@ const {
   createUserDao,
   dupliCheckEmailDao,
   dupliCheckPhoneDao,
+  getUserInfoDao,
 } = require('./userDao');
 
 const { listProductsDao, productDetailDao } = require('./productDao');
@@ -45,6 +46,7 @@ const {
   getWalletBalanceDao,
   walletUpdateDao,
   getOrderAmountDao,
+  payStatusChangeDao,
 } = require('./paymentDao');
 
 module.exports = {
@@ -56,6 +58,7 @@ module.exports = {
     createUserDao,
     dupliCheckEmailDao,
     dupliCheckPhoneDao,
+    getUserInfoDao,
   },
   productDao: {
     listProductsDao,
@@ -91,5 +94,6 @@ module.exports = {
     getWalletBalanceDao,
     walletUpdateDao,
     getOrderAmountDao,
+    payStatusChangeDao,
   },
 };

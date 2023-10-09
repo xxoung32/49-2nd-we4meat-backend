@@ -25,10 +25,12 @@ const walletUpdateDao = async (newCredit, customerId) => {
   return customer_wallet;
 };
 
-const payStatusChangeDao = async (orderId) => {
+const payStatusChangeDao = async (customerId, orderId) => {
   const orderstatus_change = await dataSource.query(
-    `UPDATE orders SET pay_Status = '2' WHERE id = ?`,
-    [orderId],
+    `UPDATE orders
+    SET pay_Status = '2'
+    WHERE customer_id = ? AND id = ?`,
+    [customerId, orderId],
   );
   return orderstatus_change;
 };

@@ -1,9 +1,11 @@
 const {
   createUserService,
   dupliCheckEmailService,
+  dupliCheckPhoneService,
   getVerificationCodeService,
   setNewPasswordService,
   loginService,
+  getUserInfoService,
 } = require('./userService');
 
 const {
@@ -38,15 +40,17 @@ const {
   walletDeductionService,
   getOrderlistService,
   getWalletBalanceService,
-} = require('./paymentService');
+} = require('./paymentService')
 
 module.exports = {
   userService: {
     createUserService,
     dupliCheckEmailService,
+    dupliCheckPhoneService,
     getVerificationCodeService,
     setNewPasswordService,
     loginService,
+    getUserInfoService,
   },
   productService: {
     listProductsService,
@@ -57,12 +61,6 @@ module.exports = {
     createReviewService,
     updateReviewService,
     deleteReviewService,
-  },
-  paymentService: {
-    walletRechargeService,
-    walletDeductionService,
-    getOrderlistService,
-    getWalletBalanceService,
   },
   cartService: {
     addItemService,
@@ -78,4 +76,10 @@ module.exports = {
   addressService: {
     getOrderAddressService,
   },
+  paymentService: {
+    walletRechargeService,
+    walletDeductionService,
+    getOrderlistService,
+    getWalletBalanceService,
+  }
 };

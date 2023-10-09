@@ -44,8 +44,8 @@ const getOrderDetailController = async (req, res, next) => {
   try {
     const userId = req.user.id;
     if (!userId) throwError(400, "KEY_ERROR_UID");
-    if (req?.query.Id == null) throwError(400, 'KEY_ERROR_OID');
-    const orderId = req.query.Id;
+    if (req?.query.id == null) throwError(400, 'KEY_ERROR_OID');
+    const orderId = req.query.id;
     return res.status(200).json({
       message: 'ORDER_DETAIL_LOADED',
       data: await getOrderDetailService(userId, orderId),

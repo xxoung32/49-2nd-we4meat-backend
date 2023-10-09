@@ -27,14 +27,6 @@ const getOrderDetailService = async (userId, orderId) => {
   return await getOrderDetailDao(userId, orderId);
 };
 
-// //주문하기 
-// const placeOrderService = async (userId, totalPrice) => {
-//   const customers_Credit = await checkCreditDao(userId);
-//   const customerCart = await customerCartDao(userId);
-//   if ((customers_Credit < totalPrice) || (totalPrice < 0)) throwError(400, 'NOT_ENOUGH_CREDIT')
-//   if (customerCart.length == 0) throwError(400, 'NO_ORDERS')
-//   return MoveCartToOrderDao(userId, totalPrice);
-// };
 //주문취소하기
 const cancelOrdersService = async (userId, orderId, totalPrice) => {
   const orderStatus = await checkOrderStatusDao(orderId);
