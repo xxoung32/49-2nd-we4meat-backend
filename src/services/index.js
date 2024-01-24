@@ -23,7 +23,8 @@ const {
 const {
   addItemService,
   getCartService,
-  updateCartService,
+  updateCartQuantityService,
+  deleteItemService,
 } = require('./cartService');
 
 const {
@@ -65,7 +66,8 @@ module.exports = {
   cartService: {
     addItemService,
     getCartService,
-    updateCartService,
+    updateCartQuantityService,
+    deleteItemService,
   },
   orderService: {
     createOrderService,

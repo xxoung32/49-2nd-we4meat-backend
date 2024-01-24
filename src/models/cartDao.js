@@ -1,7 +1,7 @@
 const { dataSource } = require('./dataSource');
 
 // 장바구니 아이템 (제품) 추가 - 완
-const updateItemDao = async (customerId, productId, quantity) => {
+const addItemDao = async (customerId, productId, quantity) => {
   return await dataSource.query(
     `
     INSERT
@@ -15,9 +15,6 @@ const updateItemDao = async (customerId, productId, quantity) => {
 // 장바구니 조회 - 완
 const getCartDao = async (customerId) => {
   const status = 1;
-  // 처음에 작성한 코드는 status를 query문에 where절을 사용하여 데이터 필터링을 했는데,
-  // 수정 된 코드는 status를 상수로 선언하고 값을 1로 주는 방법으로 수정
-  // status를 상수로 선언을 하게 되면 where절을 사용해서 필터링 하는 것보다 가독성과 유지보수성이 더 좋아진다.
   return await dataSource.query(
     `
     SELECT p.id AS productId,
@@ -35,17 +32,6 @@ const getCartDao = async (customerId) => {
   );
 };
 
-// 장바구니 전체 삭제 - 완
-const purgeCartDao = async (customerId) => {
-  return await dataSource.query(
-    `
-    DELETE
-    FROM carts
-    WHERE customer_id = ?
-    `,
-    [customerId],
-  );
-};
 
 //개별 아이템 추가할 때 기존 아이템 있는 지 확인 있으면 수량 추가
 const existingItemCheckDao = async (customerId, productId) => {
@@ -62,21 +48,45 @@ const existingItemCheckDao = async (customerId, productId) => {
 };
 
 // 같은 상품이 있는 경우 수량 추가
-const updateQuantityDao = async (cartId, quantity) => {
+const addQuantityDao = async (customerId, cartId, quantity) => {
   return await dataSource.query(
     `
       UPDATE carts
       SET quantity = quantity + ?
-      WHERE id = ?;
+      WHERE id = ? AND customer_id = ?
     `,
-    [quantity, cartId],
+    [quantity, cartId, customerId],
+  );
+};
+
+//장바구니 내에서 수량 변경
+const updateCartQuantityDao = async (customerId, cartId, quantity) => {
+  return await dataSource.query(`
+  UPDATE carts
+  SET quantity = ?
+  WHERE id =? AND customer_id = ?
+  `,
+    [quantity, cartId, customerId]);
+
+}
+
+//장바구니 아이템 삭제
+const deleteItemDao = async (customerId, cartId) => {
+  return await dataSource.query(
+    `
+    DELETE
+    FROM carts
+    WHERE customer_id = ? AND id = ?
+    `,
+    [customerId, cartId]
   );
 };
 
 module.exports = {
-  updateItemDao,
+  addItemDao,
   getCartDao,
-  purgeCartDao,
   existingItemCheckDao,
-  updateQuantityDao,
+  addQuantityDao,
+  deleteItemDao,
+  updateCartQuantityDao,
 };
